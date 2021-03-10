@@ -17,7 +17,7 @@ import java.util.regex.Pattern
  * @param skipCI 跳过 CI
  */
 data class CommitMessage(
-        var changeType: ChangeType = ChangeType.DEFAULT,
+        var changeType: ChangeType = ConfigHelper.DEFAULT,
         var changeScope: String = "",
         var shortDescription: String = "",
         var longDescription: String = "",
@@ -110,9 +110,7 @@ data class CommitMessage(
                     changeTypeStr = line1.substring(0, line1.indexOf(":"))
                 }
                 // 修改类型
-                result.changeType = ChangeType.typeList.firstOrNull {
-                    it.action.equals(changeTypeStr, true)
-                } ?: ChangeType.DEFAULT
+                result.changeType = ConfigHelper.findChangeType(changeTypeStr)
 
                 // 简单说明
                 result.shortDescription = line1.substring(line1.indexOf(": ") + 1, line1.length)

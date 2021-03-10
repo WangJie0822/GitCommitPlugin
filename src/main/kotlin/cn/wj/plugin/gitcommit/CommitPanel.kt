@@ -14,7 +14,7 @@ import javax.swing.*
 class CommitPanel(project: Project?, message: CommitMessage?) {
 
     private val typeList: ArrayList<ChangeType>
-        get() = ChangeType.typeList
+        get() = ConfigHelper.typeList
 
     lateinit var mainPanel: JPanel
     lateinit var changeTypePanel: JPanel
@@ -37,6 +37,12 @@ class CommitPanel(project: Project?, message: CommitMessage?) {
     lateinit var choreRadioButton: JRadioButton
     lateinit var revertRadioButton: JRadioButton
     lateinit var changeTypeGroup: ButtonGroup
+    lateinit var typeOfChangeLabel: JLabel
+    lateinit var scopeOfThisChangeLabel: JLabel
+    lateinit var shortDescriptionLabel: JLabel
+    lateinit var longDescriptionLabel: JLabel
+    lateinit var breakingChangesLabel: JLabel
+    lateinit var closedIssuesLabel: JLabel
 
     init {
         val path = project?.basePath.orEmpty()
@@ -51,6 +57,17 @@ class CommitPanel(project: Project?, message: CommitMessage?) {
         if (message != null) {
             restoreValuesFromParsedCommitMessage(message)
         }
+
+        ConfigHelper.dialog.let { entity ->
+            typeOfChangeLabel.text = entity.typeOfChange
+            scopeOfThisChangeLabel.text = entity.scopeOfThisChange
+            shortDescriptionLabel.text = entity.shortDescription
+            longDescriptionLabel.text = entity.longDescription
+            breakingChangesLabel.text = entity.breakingChanges
+            closedIssuesLabel.text = entity.closedIssues
+            wrapTextCheckBox.text = entity.wrapText
+            skipCICheckBox.text = entity.skipCI
+        }
     }
 
     private fun restoreValuesFromParsedCommitMessage(message: CommitMessage) {
@@ -58,12 +75,6 @@ class CommitPanel(project: Project?, message: CommitMessage?) {
         buttons.forEach { button ->
             changeTypeGroup.remove(button)
         }
-//        while (buttons.hasMoreElements()) {
-//            val button = buttons.nextElement()
-//            if (button.actionCommand.equals(message.changeType.label(), ignoreCase = true)) {
-//                button.isSelected = true
-//            }
-//        }
         val spacer = changeTypePanel.components.firstOrNull { it is Spacer }
         val spacerConstraint = if (spacer != null) (changeTypePanel.layout as GridLayoutManager).getConstraintsForComponent(spacer) else null
         val defaultConstraint = (changeTypePanel.layout as GridLayoutManager).getConstraintsForComponent(buttons.first())

@@ -35,8 +35,5 @@ data class ChangeType(
                 ChangeType("CHORE", "Chores", "Other changes that don't modify src or test files"),
                 ChangeType("REVERT", "Reverts", "Reverts a previous commit")
         )
-        var typeList = DEFAULT_LIST
-        val DEFAULT: ChangeType
-            get() = typeList[0]
     }
 }
