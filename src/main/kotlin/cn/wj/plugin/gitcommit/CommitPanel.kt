@@ -1,16 +1,23 @@
 package cn.wj.plugin.gitcommit
 
 import com.intellij.openapi.project.Project
+import com.intellij.uiDesigner.core.GridConstraints
+import com.intellij.uiDesigner.core.GridLayoutManager
+import com.intellij.uiDesigner.core.Spacer
 import java.io.File
 import java.util.function.Consumer
 import javax.swing.*
 
 /**
- * 创建提交面标
+ * 创建提交面板
  */
 class CommitPanel(project: Project?, message: CommitMessage?) {
 
+    private val typeList: ArrayList<ChangeType>
+        get() = ChangeType.typeList
+
     lateinit var mainPanel: JPanel
+    lateinit var changeTypePanel: JPanel
     lateinit var changeScope: JComboBox<String>
     lateinit var shortDescription: JTextField
     lateinit var longDescription: JTextArea
@@ -47,13 +54,47 @@ class CommitPanel(project: Project?, message: CommitMessage?) {
     }
 
     private fun restoreValuesFromParsedCommitMessage(message: CommitMessage) {
-        val buttons = changeTypeGroup.elements
-        while (buttons.hasMoreElements()) {
-            val button = buttons.nextElement()
-            if (button.actionCommand.equals(message.changeType.label(), ignoreCase = true)) {
+        val buttons = changeTypeGroup.elements.toList()
+        buttons.forEach { button ->
+            changeTypeGroup.remove(button)
+        }
+//        while (buttons.hasMoreElements()) {
+//            val button = buttons.nextElement()
+//            if (button.actionCommand.equals(message.changeType.label(), ignoreCase = true)) {
+//                button.isSelected = true
+//            }
+//        }
+        val spacer = changeTypePanel.components.firstOrNull { it is Spacer }
+        val spacerConstraint = if (spacer != null) (changeTypePanel.layout as GridLayoutManager).getConstraintsForComponent(spacer) else null
+        val defaultConstraint = (changeTypePanel.layout as GridLayoutManager).getConstraintsForComponent(buttons.first())
+
+        changeTypePanel.removeAll()
+
+        if (spacer != null) {
+            changeTypePanel.add(spacer, spacerConstraint)
+        }
+
+        typeList.forEachIndexed { index, changeType ->
+            val rb = JRadioButton(changeType.toString())
+            rb.actionCommand = changeType.action
+            val clone = defaultConstraint.clone() as GridConstraints
+            clone.row = index
+            changeTypeGroup.add(rb)
+            changeTypePanel.add(rb, clone)
+        }
+
+        var selected = false
+        changeTypeGroup.elements.toList().forEach { button ->
+            if (button.actionCommand.equals(message.changeType.action, true)) {
                 button.isSelected = true
+                selected = true
             }
         }
+        if (!selected) {
+            // 未选中，默认选中第一条
+            changeTypeGroup.elements.toList().firstOrNull()?.isSelected = true
+        }
+
         changeScope.selectedItem = message.changeScope
         shortDescription.text = message.shortDescription
         longDescription.text = message.longDescription
@@ -67,10 +108,12 @@ class CommitPanel(project: Project?, message: CommitMessage?) {
         while (buttons.hasMoreElements()) {
             val button = buttons.nextElement()
             if (button.isSelected) {
-                return ChangeType.valueOf(button.actionCommand.toUpperCase())
+                return typeList.firstOrNull {
+                    it.action.equals(button.actionCommand, true)
+                } ?: typeList[0]
             }
         }
-        return ChangeType.DEFAULT
+        return typeList[0]
     }
 
 

@@ -30,6 +30,7 @@ repositories {
 }
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
+    detektPlugins("com.google.code.gson:gson:2.8.6")
 }
 
 // Configure gradle-intellij-plugin plugin.

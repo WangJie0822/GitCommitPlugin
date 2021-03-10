@@ -29,7 +29,7 @@ data class CommitMessage(
 
     override fun toString(): String {
         return with(StringBuilder()) {
-            append(changeType.label())
+            append(changeType.action)
 
             if (changeScope.isNotBlank()) {
                 append("($changeScope)")
@@ -84,22 +84,39 @@ data class CommitMessage(
     companion object {
         private const val MAX_LINE_LENGTH = 72
 
-        private val COMMIT_FIRST_LINE_FORMAT = Pattern.compile("^([a-z]+)(\\((.+)\\))?: (.+)")
         private val COMMIT_CLOSES_FORMAT = Pattern.compile("Closes (.+)")
 
         fun parse(message: String): CommitMessage {
             val result = CommitMessage()
             try {
-                var matcher = COMMIT_FIRST_LINE_FORMAT.matcher(message)
-                if (!matcher.find()) {
+                val strings = message.split("\n".toRegex()).toTypedArray()
+
+                if (strings.isEmpty()) {
                     return result
                 }
 
-                result.changeType = ChangeType.valueOf(matcher.group(1).toUpperCase())
-                result.changeScope = matcher.group(3)
-                result.shortDescription = matcher.group(4)
+                val line1 = strings[0]
+                if (!line1.contains(":")) {
+                    return result
+                }
 
-                val strings = message.split("\n".toRegex()).toTypedArray()
+                val changeTypeStr: String
+                if (line1.contains("(")) {
+                    // 包含范围
+                    changeTypeStr = line1.substring(0, line1.indexOf("("))
+                    result.changeScope = line1.substring(line1.indexOf("(") + 1, line1.indexOf(")"))
+                } else {
+                    // 没有范围
+                    changeTypeStr = line1.substring(0, line1.indexOf(":"))
+                }
+                // 修改类型
+                result.changeType = ChangeType.typeList.firstOrNull {
+                    it.action.equals(changeTypeStr, true)
+                } ?: ChangeType.DEFAULT
+
+                // 简单说明
+                result.shortDescription = line1.substring(line1.indexOf(": ") + 1, line1.length)
+
                 if (strings.size < 2) {
                     return result
                 }
@@ -130,7 +147,7 @@ data class CommitMessage(
                 }
                 result.breakingChanges = sb.toString().trim { it <= ' ' }.replace("BREAKING CHANGE: ", "")
 
-                matcher = COMMIT_CLOSES_FORMAT.matcher(message)
+                val matcher = COMMIT_CLOSES_FORMAT.matcher(message)
                 sb.clear()
                 while (matcher.find()) {
                     sb.append(matcher.group(1)).append(',')
