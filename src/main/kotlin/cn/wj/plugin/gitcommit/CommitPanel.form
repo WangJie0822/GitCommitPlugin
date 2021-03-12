@@ -32,6 +32,7 @@
         </constraints>
         <properties>
           <editable value="true"/>
+          <font swing-font="Button.font"/>
         </properties>
       </component>
       <component id="19a59" class="javax.swing.JLabel" binding="shortDescriptionLabel">
@@ -49,7 +50,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font swing-font="Button.font"/>
+        </properties>
       </component>
       <component id="a5d3c" class="javax.swing.JLabel" binding="longDescriptionLabel">
         <constraints>
@@ -66,6 +69,7 @@
           </grid>
         </constraints>
         <properties>
+          <font swing-font="Button.font"/>
           <lineWrap value="true"/>
         </properties>
       </component>
@@ -84,7 +88,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font swing-font="Button.font"/>
+        </properties>
       </component>
       <component id="c313a" class="javax.swing.JLabel" binding="breakingChangesLabel">
         <constraints>
@@ -101,6 +107,7 @@
           </grid>
         </constraints>
         <properties>
+          <font swing-font="Button.font"/>
           <lineWrap value="true"/>
         </properties>
       </component>
