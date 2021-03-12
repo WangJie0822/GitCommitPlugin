@@ -14,11 +14,39 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
+        按照以下默认模板创建 Commit 信息:</p>
 
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
+       type(scope):subject
+       BLANK LINE
+       body
+       BLANK LINE
+       footer
 
-To keep everything working, do not remove `<!-- ... -->` sections. 
+        <p>当然你可以在项目根目录下添加 git_template_config.json 文件对修改类型以及弹窗显示文本进行自定义</p>
+        {
+            "dialog": {
+                 "typeOfChange": "修改类型",
+                 "scopeOfThisChange": "修改范围",
+                 "shortDescription": "简单说明",
+                 "longDescription": "详细说明",
+                 "breakingChanges": "重大改变",
+                 "closedIssues": "已解决问题",
+                 "wrapText": "是否72位自动换行？",
+                 "skipCI": "是否跳过CI构建？"
+               },
+            "changeTypeList": [
+                {
+                    "action": "[代码新增]",
+                    "title": "代码新增",
+                    "description": "新增功能、补充功能新增代码"
+                },
+                {
+                    "action": "[代码修改]",
+                    "title": "代码修改",
+                    "description": "新增功能、补充功能修该代码"
+                }
+            ]
+        }
 <!-- Plugin description end -->
 
 ## Installation
