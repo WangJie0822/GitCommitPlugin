@@ -29,28 +29,28 @@ data class ChangeType(
             ChangeType(
                 "STYLE", "Styles",
                 "Changes that do not affect the meaning of the" +
-                        " code (white-space, formatting, missing semi-colons, etc)"
+                    " code (white-space, formatting, missing semi-colons, etc)"
             ),
             ChangeType(
                 "REFACTOR", "Code Refactoring",
                 "A code change that neither " +
-                        "fixes a bug nor adds a feature"
+                    "fixes a bug nor adds a feature"
             ),
             ChangeType(
                 "PERF", "Performance Improvements",
                 "A code change that " +
-                        "improves performance"
+                    "improves performance"
             ),
             ChangeType("TEST", "Tests", "Adding missing tests or correcting existing tests"),
             ChangeType(
                 "BUILD", "Builds",
                 "Changes that affect the build system or " +
-                        "external dependencies (example scopes: gulp, broccoli, npm)"
+                    "external dependencies (example scopes: gulp, broccoli, npm)"
             ),
             ChangeType(
                 "CI", "Continuous Integrations",
                 "Changes to our CI configuration" +
-                        " files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"
+                    " files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"
             ),
             ChangeType("CHORE", "Chores", "Other changes that don't modify src or test files"),
             ChangeType("REVERT", "Reverts", "Reverts a previous commit")

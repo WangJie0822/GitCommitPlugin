@@ -1,8 +1,8 @@
 package cn.wj.plugin.gitcommit
 
-import java.util.regex.Pattern
 import org.apache.commons.lang.StringUtils
 import org.apache.commons.lang.WordUtils
+import java.util.regex.Pattern
 
 /**
  * 提交信息
