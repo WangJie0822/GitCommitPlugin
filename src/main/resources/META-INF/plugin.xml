@@ -1,7 +1,48 @@
 <idea-plugin>
     <id>cn.wj.plugin.gitcommit</id>
     <name>GitCommitPlugin</name>
-    <vendor>JetBrains</vendor>
+    <version>1.0.0</version>
+    <vendor>w15555650921@gmail.com</vendor>
+
+    <description><![CDATA[
+        <p>按照以下默认模板创建 Commit 信息:</p>
+
+        <pre>
+        &lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+        &lt;BLANK LINE&gt;
+        &lt;body&gt;
+        &lt;BLANK LINE&gt;
+        &lt;footer&gt;
+        </pre>
+
+        <p>当然你可以在项目根目录下添加 git_template_config.json 文件对修改类型以及弹窗显示文本进行自定义</p>
+        <pre>
+        &lt;{
+        &lt;    "dialog": {
+        &lt;         "typeOfChange": "修改类型",
+        &lt;         "scopeOfThisChange": "修改范围",
+        &lt;         "shortDescription": "简单说明",
+        &lt;         "longDescription": "详细说明",
+        &lt;         "breakingChanges": "重大改变",
+        &lt;         "closedIssues": "已解决问题",
+        &lt;         "wrapText": "是否72位自动换行？",
+        &lt;         "skipCI": "是否跳过CI构建？"
+        &lt;       },
+        &lt;    "changeTypeList": [
+        &lt;        {
+        &lt;            "action": "[代码新增]",
+        &lt;            "title": "代码新增",
+        &lt;            "description": "新增功能、补充功能新增代码"
+        &lt;        },
+        &lt;        {
+        &lt;            "action": "[代码修改]",
+        &lt;            "title": "代码修改",
+        &lt;            "description": "新增功能、补充功能修该代码"
+        &lt;        }
+        &lt;    ]
+        &lt;}
+        </pre>
+    ]]></description>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->

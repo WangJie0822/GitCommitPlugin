@@ -19,8 +19,8 @@ import java.io.InputStreamReader
 /**
  * 创建提交按钮
  */
-class CreateCommitAction
-    : DumbAwareAction() {
+class CreateCommitAction :
+    DumbAwareAction() {
 
     init {
         isEnabledInModalContext = true
@@ -63,7 +63,9 @@ class CreateCommitAction
             return
         }
         try {
-            val jsonObject = JsonParser.parseReader(BufferedReader(InputStreamReader(FileInputStream(templateFile), "UTF-8"))).asJsonObject
+            val jsonObject = JsonParser.parseReader(
+                BufferedReader(InputStreamReader(FileInputStream(templateFile), "UTF-8"))
+            ).asJsonObject
             if (jsonObject.has("changeTypeList")) {
                 // 有自定义修改类型字段
                 val changeType = jsonObject.get("changeTypeList")
@@ -88,75 +90,64 @@ class CreateCommitAction
                 ConfigHelper.dialog = DialogEntity()
             }
         } catch (throwable: Throwable) {
-            throwable.printStackTrace()
+            print(throwable)
         }
     }
 
     private fun loadDialogInfo(jsonObject: JsonObject) {
-        try {
-            val dialogEntity = DialogEntity()
-            if (jsonObject.has("typeOfChange")) {
-                dialogEntity.typeOfChange = jsonObject.get("typeOfChange").asString
-            }
-            if (jsonObject.has("scopeOfThisChange")) {
-                dialogEntity.scopeOfThisChange = jsonObject.get("scopeOfThisChange").asString
-            }
-            if (jsonObject.has("shortDescription")) {
-                dialogEntity.shortDescription = jsonObject.get("shortDescription").asString
-            }
-            if (jsonObject.has("longDescription")) {
-                dialogEntity.longDescription = jsonObject.get("longDescription").asString
-            }
-            if (jsonObject.has("breakingChanges")) {
-                dialogEntity.breakingChanges = jsonObject.get("breakingChanges").asString
-            }
-            if (jsonObject.has("closedIssues")) {
-                dialogEntity.closedIssues = jsonObject.get("closedIssues").asString
-            }
-            if (jsonObject.has("wrapText")) {
-                dialogEntity.wrapText = jsonObject.get("wrapText").asString
-            }
-            if (jsonObject.has("skipCI")) {
-                dialogEntity.skipCI = jsonObject.get("skipCI").asString
-            }
-            ConfigHelper.dialog = dialogEntity
-        } catch (throwable: Throwable) {
-            throwable.printStackTrace()
-            ConfigHelper.dialog = DialogEntity()
+        val dialogEntity = DialogEntity()
+        if (jsonObject.has("typeOfChange")) {
+            dialogEntity.typeOfChange = jsonObject.get("typeOfChange").asString
         }
+        if (jsonObject.has("scopeOfThisChange")) {
+            dialogEntity.scopeOfThisChange = jsonObject.get("scopeOfThisChange").asString
+        }
+        if (jsonObject.has("shortDescription")) {
+            dialogEntity.shortDescription = jsonObject.get("shortDescription").asString
+        }
+        if (jsonObject.has("longDescription")) {
+            dialogEntity.longDescription = jsonObject.get("longDescription").asString
+        }
+        if (jsonObject.has("breakingChanges")) {
+            dialogEntity.breakingChanges = jsonObject.get("breakingChanges").asString
+        }
+        if (jsonObject.has("closedIssues")) {
+            dialogEntity.closedIssues = jsonObject.get("closedIssues").asString
+        }
+        if (jsonObject.has("wrapText")) {
+            dialogEntity.wrapText = jsonObject.get("wrapText").asString
+        }
+        if (jsonObject.has("skipCI")) {
+            dialogEntity.skipCI = jsonObject.get("skipCI").asString
+        }
+        ConfigHelper.dialog = dialogEntity
     }
 
     private fun loadChangeTypeList(jsonArray: JsonArray) {
-        try {
-            val ls = arrayListOf<ChangeType>()
-            jsonArray.forEach { element ->
-                element.asJsonObject.let { obj ->
-                    val action = if (obj.has("action")) {
-                        obj.get("action").asString
-                    } else {
-                        "ACTION"
-                    }
-                    val title = if (obj.has("title")) {
-                        obj.get("title").asString
-                    } else {
-                        "TITLE"
-                    }
-                    val description = if (obj.has("description")) {
-                        obj.get("description").asString
-                    } else {
-                        "DESCRIPTION"
-                    }
-                    ls.add(ChangeType(action, title, description))
-                }
-            }
-            if (ls.isEmpty()) {
-                ConfigHelper.typeList = ChangeType.DEFAULT_LIST
+        val ls = arrayListOf<ChangeType>()
+        jsonArray.forEach { element ->
+            val obj = element.asJsonObject
+            val action = if (obj.has("action")) {
+                obj.get("action").asString
             } else {
-                ConfigHelper.typeList = ls
+                "ACTION"
             }
-        } catch (throwable: Throwable) {
-            throwable.printStackTrace()
+            val title = if (obj.has("title")) {
+                obj.get("title").asString
+            } else {
+                "TITLE"
+            }
+            val description = if (obj.has("description")) {
+                obj.get("description").asString
+            } else {
+                "DESCRIPTION"
+            }
+            ls.add(ChangeType(action, title, description))
+        }
+        if (ls.isEmpty()) {
             ConfigHelper.typeList = ChangeType.DEFAULT_LIST
+        } else {
+            ConfigHelper.typeList = ls
         }
     }
 }

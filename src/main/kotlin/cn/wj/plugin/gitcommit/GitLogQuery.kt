@@ -20,15 +20,15 @@ class GitLogQuery(private val workingDirectory: File) {
                 ProcessBuilder("sh", "-c", GIT_LOG_COMMAND)
             }
             val process = processBuilder
-                    .directory(workingDirectory)
-                    .start()
+                .directory(workingDirectory)
+                .start()
             val reader = BufferedReader(InputStreamReader(process.inputStream))
             val output = reader.lines().collect(Collectors.toList())
             process.waitFor(2, TimeUnit.SECONDS)
             process.destroy()
             process.waitFor()
             Result(process.exitValue(), output)
-        } catch (e: Exception) {
+        } catch (e: InterruptedException) {
             Result.ERROR
         }
     }
@@ -46,12 +46,14 @@ class GitLogQuery(private val workingDirectory: File) {
 
         fun getScopes(): Set<String> {
             val scopes = hashSetOf<String>()
-            logs.forEach(Consumer { s: String? ->
-                val matcher = COMMIT_FIRST_LINE_FORMAT.matcher(s.orEmpty())
-                if (matcher.find()) {
-                    scopes.add(matcher.group(1))
+            logs.forEach(
+                Consumer { s: String? ->
+                    val matcher = COMMIT_FIRST_LINE_FORMAT.matcher(s.orEmpty())
+                    if (matcher.find()) {
+                        scopes.add(matcher.group(1))
+                    }
                 }
-            })
+            )
             return scopes
         }
 

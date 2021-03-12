@@ -6,7 +6,14 @@ import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.uiDesigner.core.Spacer
 import java.io.File
 import java.util.function.Consumer
-import javax.swing.*
+import javax.swing.ButtonGroup
+import javax.swing.JCheckBox
+import javax.swing.JComboBox
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JRadioButton
+import javax.swing.JTextArea
+import javax.swing.JTextField
 
 /**
  * 创建提交面板
@@ -50,9 +57,11 @@ class CommitPanel(project: Project?, message: CommitMessage?) {
         val result = GitLogQuery(workingDirectory).execute()
         if (result.isSuccess()) {
             changeScope.addItem("")
-            result.getScopes().forEach(Consumer { item: String? ->
-                changeScope.addItem(item)
-            })
+            result.getScopes().forEach(
+                Consumer { item: String? ->
+                    changeScope.addItem(item)
+                }
+            )
         }
         if (message != null) {
             restoreValuesFromParsedCommitMessage(message)
@@ -76,8 +85,13 @@ class CommitPanel(project: Project?, message: CommitMessage?) {
             changeTypeGroup.remove(button)
         }
         val spacer = changeTypePanel.components.firstOrNull { it is Spacer }
-        val spacerConstraint = if (spacer != null) (changeTypePanel.layout as GridLayoutManager).getConstraintsForComponent(spacer) else null
-        val defaultConstraint = (changeTypePanel.layout as GridLayoutManager).getConstraintsForComponent(buttons.first())
+        val spacerConstraint = if (spacer != null) {
+            (changeTypePanel.layout as GridLayoutManager).getConstraintsForComponent(spacer)
+        } else {
+            null
+        }
+        val defaultConstraint = (changeTypePanel.layout as GridLayoutManager)
+            .getConstraintsForComponent(buttons.first())
 
         changeTypePanel.removeAll()
 
@@ -127,17 +141,16 @@ class CommitPanel(project: Project?, message: CommitMessage?) {
         return typeList[0]
     }
 
-
     fun getCommitMessage(): CommitMessage {
         return CommitMessage(
-                getSelectedChangeType(),
-                changeScope.selectedItem?.toString().orEmpty(),
-                shortDescription.text.trim { it <= ' ' },
-                longDescription.text.trim { it <= ' ' },
-                breakingChanges.text.trim { it <= ' ' },
-                closedIssues.text.trim { it <= ' ' },
-                wrapTextCheckBox.isSelected,
-                skipCICheckBox.isSelected
+            getSelectedChangeType(),
+            changeScope.selectedItem?.toString().orEmpty(),
+            shortDescription.text.trim { it <= ' ' },
+            longDescription.text.trim { it <= ' ' },
+            breakingChanges.text.trim { it <= ' ' },
+            closedIssues.text.trim { it <= ' ' },
+            wrapTextCheckBox.isSelected,
+            skipCICheckBox.isSelected
         )
     }
 }

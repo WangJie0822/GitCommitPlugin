@@ -10,8 +10,8 @@ import javax.swing.JComponent
  * @param project [Project] 对象
  * @param message 提交信息 [CommitMessage] 对象
  */
-class CommitDialog(project: Project?, message: CommitMessage?)
-    : DialogWrapper(project) {
+class CommitDialog(project: Project?, message: CommitMessage?) :
+    DialogWrapper(project) {
 
     private val panel: CommitPanel = CommitPanel(project, message)
 
