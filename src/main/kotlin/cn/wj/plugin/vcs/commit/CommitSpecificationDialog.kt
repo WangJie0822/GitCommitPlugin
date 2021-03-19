@@ -75,7 +75,7 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private val panelTwoMap = hashMapOf<Component, Any>()
 
     fun createCenterPanel(): JComponent {
-        val config = ConfigHelper.getInstance(project).panelInfo
+        val config = ConfigHelper.loadConfig(project)
 
         panelOneMap.clear()
         panelTwoMap.clear()
@@ -247,7 +247,7 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     }
 
     private fun getSelectedChangeType(): ChangeTypeEntity {
-        val typeList = ConfigHelper.getInstance(project).panelInfo.changeTypes
+        val typeList = ConfigHelper.loadConfig(project).changeTypes
         val selectedButton = typeOfChangeGroup?.elements?.toList()?.firstOrNull {
             it.isSelected
         } ?: return typeList.first()

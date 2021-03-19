@@ -1,5 +1,6 @@
 package cn.wj.plugin.vcs.commit
 
+import com.intellij.openapi.project.Project
 import org.apache.commons.lang.StringUtils
 import org.apache.commons.lang.WordUtils
 
@@ -22,8 +23,8 @@ data class CommitMessageEntity(
     var closedIssues: String = ""
 ) {
 
-    fun getCommitString(): String {
-        val keywords = ConfigHelper.getInstance(null).panelInfo.keywords
+    fun getCommitString(project: Project?): String {
+        val keywords = ConfigHelper.loadConfig(project).keywords
         return with(StringBuilder()) {
             // 修改类型
             append(typeOfChange.action)
@@ -94,14 +95,14 @@ data class CommitMessageEntity(
 
     companion object {
 
-        fun parse(message: String): CommitMessageEntity {
+        fun parse(message: String, project: Project?): CommitMessageEntity {
             val result = CommitMessageEntity()
             val strings = message.split("\n".toRegex()).toTypedArray()
             if (strings.isEmpty()) {
                 return result
             }
 
-            val config = ConfigHelper.getInstance(null).panelInfo
+            val config = ConfigHelper.loadConfig(project)
             val keywords = config.keywords
             val typeList = config.changeTypes
 
