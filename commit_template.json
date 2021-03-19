@@ -1,15 +1,25 @@
 {
-  "dialog": {
+  "label": {
     "typeOfChange": "修改类型",
-    "scopeOfThisChange": "修改范围",
+    "scopeOfChange": "修改范围",
     "shortDescription": "简单说明",
     "longDescription": "详细说明",
     "breakingChanges": "重大改变",
-    "closedIssues": "已解决问题",
-    "wrapText": "是否72位自动换行？",
-    "skipCI": "是否跳过CI构建？"
+    "closedIssues": "已解决问题"
   },
-  "changeTypeList": [
+  "keywords": {
+    "wrapWords": true,
+    "maxLineLength": 70,
+    "scopeWrapperStart": "(",
+    "scopeWrapperEnd": ")",
+    "descriptionSeparator": ": ",
+    "breakingChanges": "重大改变: ",
+    "breakingChangesEmpty": "无",
+    "closedIssues": "关闭问题: ",
+    "closedIssuesSeparator": ",",
+    "closedIssuesEmpty": "无"
+  },
+  "changeTypes": [
     {
       "action": "[代码新增]",
       "title": "代码新增",

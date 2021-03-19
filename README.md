@@ -4,43 +4,59 @@
 [![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
 
-## 插件描述
-- 一个按照指定模板帮助创建 commit 信息的工具。[Github](https://github.com/WangJie0822/GitCommitPlugin)
-
 <!-- Plugin description -->
-    按照以下默认模板创建 Commit 信息:
 
-       type(scope):subject
-       BLANK LINE
-       body
-       BLANK LINE
-       footer
+This plugin allows to create a commit message with the following template:
 
-       当然你可以在项目根目录下添加 git_template_config.json 文件对修改类型以及弹窗显示文本进行自定义
-        {
-            "dialog": {
-                 "typeOfChange": "修改类型",
-                 "scopeOfThisChange": "修改范围",
-                 "shortDescription": "简单说明",
-                 "longDescription": "详细说明",
-                 "breakingChanges": "重大改变",
-                 "closedIssues": "已解决问题",
-                 "wrapText": "是否72位自动换行？",
-                 "skipCI": "是否跳过CI构建？"
-               },
-            "changeTypeList": [
-                {
-                    "action": "[代码新增]",
-                    "title": "代码新增",
-                    "description": "新增功能、补充功能新增代码"
-                },
-                {
-                    "action": "[代码修改]",
-                    "title": "代码修改",
-                    "description": "新增功能、补充功能修该代码"
-                }
-            ]
-        }
+```
+<type>(<scope>): <subject>
+<BLANK LINE>
+<body>
+<BLANK LINE>
+<footer>
+```
+
+You can also add **commit_template.json** files to the project root directory to modify the default configuration:
+```json
+{
+  "label": {
+    "typeOfChange": "Type of change",
+    "scopeOfChange": "Scope of change",
+    "shortDescription": "short description",
+    "longDescription": "long description",
+    "breakingChanges": "Breaking changes",
+    "closedIssues": "Closed issues"
+  },
+  "keywords": {
+    "wrapWords": true,
+    "maxLineLength": 70,
+    "scopeWrapperStart": "(",
+    "scopeWrapperEnd": ")",
+    "descriptionSeparator": ": ",
+    "breakingChanges": "BREAKING CHANGES: ",
+    "breakingChangesEmpty": "",
+    "closedIssues": "Closes: ",
+    "closedIssuesSeparator": ",",
+    "closedIssuesEmpty": ""
+  },
+  "changeTypes": [
+    {
+      "title": "Styles",
+      "action": "STYLE",
+      "description": "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)"
+    },
+    {
+      "title": "Code Refactoring",
+      "action": "REFACTOR",
+      "description": "新增功能、补充功能修该代码"
+    },
+    {
+      "action": "[缺陷修复]",
+      "title": "缺陷修复",
+      "description": "A code change that neither fixes a bug nor adds a feature"
+    }
+  ]
+}
 <!-- Plugin description end -->
 
 ## Installation

@@ -1,1 +1,1 @@
-rootProject.name = "GitCommitPlugin"
+rootProject.name = "VcsHelperPlugin"

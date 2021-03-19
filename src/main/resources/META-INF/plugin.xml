@@ -1,6 +1,6 @@
 <idea-plugin>
-    <id>cn.wj.plugin.gitcommit</id>
-    <name>GitCommitPlugin</name>
+    <id>cn.wj.plugin.vcs</id>
+    <name>V</name>
     <vendor>w15555650921@gmail.com</vendor>
 
     <!-- Product and plugin compatibility requirements -->
@@ -14,7 +14,7 @@
     </applicationListeners>
 
     <actions>
-        <action id="Vcs.CommitTemplate" class="cn.wj.plugin.gitcommit.CreateCommitAction"
+        <action id="Wj.Vcs.CommitTemplate" class="cn.wj.plugin.vcs.commit.CreateCommitAction"
                 text="Create Commit Message"
                 description="Create commit message by template"
                 icon="/icons/load.png">
