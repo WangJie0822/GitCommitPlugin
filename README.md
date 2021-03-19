@@ -48,11 +48,6 @@ You can also add **commit_template.json** files to the project root directory to
     {
       "title": "Code Refactoring",
       "action": "REFACTOR",
-      "description": "新增功能、补充功能修该代码"
-    },
-    {
-      "action": "[缺陷修复]",
-      "title": "缺陷修复",
       "description": "A code change that neither fixes a bug nor adds a feature"
     }
   ]
