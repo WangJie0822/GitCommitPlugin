@@ -7,6 +7,7 @@ import com.intellij.uiDesigner.core.GridConstraints
 import com.intellij.uiDesigner.core.GridLayoutManager
 import java.awt.Component
 import java.awt.Dimension
+import java.awt.Font
 import java.io.File
 import java.util.function.Consumer
 import javax.swing.ButtonGroup
@@ -16,6 +17,8 @@ import javax.swing.JPanel
 import javax.swing.JRadioButton
 import javax.swing.JTextArea
 import javax.swing.JTextField
+import javax.swing.UIManager
+import javax.swing.plaf.FontUIResource
 
 /**
  * 提交规范弹窗
@@ -78,6 +81,8 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
         panelTwoMap.clear()
         rowIndex = 0
 
+        initGlobalFont()
+
         createTypeOfChange(config)
 
         createScopeOfChange(config)
@@ -98,6 +103,18 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
             panel.add(component, constraint)
         }
         return panel
+    }
+
+    private fun initGlobalFont() {
+        val fontRes = FontUIResource(Font("YaHei", Font.PLAIN, TEXT_SIZE))
+        val keys = UIManager.getDefaults().keys()
+        while (keys.hasMoreElements()) {
+            val key = keys.nextElement()
+            val value = UIManager.get(key)
+            if (value is FontUIResource) {
+                UIManager.put(key, fontRes)
+            }
+        }
     }
 
     private fun createClosedIssues(config: PanelInfoEntity) {
@@ -262,5 +279,6 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
         private const val AREA_WIDTH = 150
         private const val AREA_HEIGHT_DESCRIPTION = 100
         private const val AREA_HEIGHT_BREAKING_CHANGE = 50
+        private const val TEXT_SIZE = 12
     }
 }

@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>cn.wj.plugin.vcs</id>
-    <name>V</name>
+    <name>VcsHelperPlugin</name>
     <vendor>w15555650921@gmail.com</vendor>
 
     <!-- Product and plugin compatibility requirements -->
