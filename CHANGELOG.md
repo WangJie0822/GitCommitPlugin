@@ -1,7 +1,7 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# GitCommitPlugin Changelog
+# VcsHelperPlugin Changelog
 
 ## [Unreleased]
 ### Added
-- 新增模板自定义功能。
+- Custom template `commit_template.json` enabled.

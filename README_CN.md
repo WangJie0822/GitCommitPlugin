@@ -6,7 +6,7 @@
 
 <!-- Plugin description -->
 
-This plugin allows to create a commit message with the following template:
+你可用通过这个插件按照以下模板创建 commit 信息:
 
 ```
 <type>(<scope>): <subject>
@@ -16,16 +16,16 @@ This plugin allows to create a commit message with the following template:
 <footer>
 ```
 
-You can also add **commit_template.json** files to the project root directory to modify the default configuration:
+你还可以在项目的根目录下添加 **commit_template.json** 文件来修改默认配置:
 ```json
 {
   "label": {
-    "typeOfChange": "Type of change",
-    "scopeOfChange": "Scope of change",
-    "shortDescription": "short description",
-    "longDescription": "long description",
-    "breakingChanges": "Breaking changes",
-    "closedIssues": "Closed issues"
+    "typeOfChange": "修改类型",
+    "scopeOfChange": "影响范围",
+    "shortDescription": "简单说明",
+    "longDescription": "详细说明",
+    "breakingChanges": "重大改变",
+    "closedIssues": "关闭的问题"
   },
   "keywords": {
     "wrapWords": true,
