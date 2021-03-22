@@ -11,6 +11,8 @@
     </extensions>
 
     <applicationListeners>
+        <listener class="cn.wj.plugin.vcs.MyProjectManagerListener"
+                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
 
     <actions>
