@@ -2,7 +2,6 @@ package cn.wj.plugin.vcs.commit
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAwareAction
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.vcs.CheckinProjectPanel
 import com.intellij.openapi.vcs.CommitMessageI
@@ -20,13 +19,14 @@ class CreateCommitAction :
     }
 
     override fun actionPerformed(e: AnActionEvent) {
+        ConfigHelper.getInstance(e.project)
         val cmi = getCommitMessageI(e) ?: return
-        val commitMessage = getCommitMessage(cmi, e.project)
+        val commitMessage = getCommitMessage(cmi)
         val dialog = CommitSpecificationDialog(e.project, commitMessage)
         dialog.show()
 
         if (dialog.exitCode == DialogWrapper.OK_EXIT_CODE) {
-            cmi.setCommitMessage(dialog.getMessageEntity().getCommitString(e.project))
+            cmi.setCommitMessage(dialog.getMessageEntity().getCommitString())
         }
     }
 
@@ -39,10 +39,10 @@ class CreateCommitAction :
         }
     }
 
-    private fun getCommitMessage(cmi: CommitMessageI, project: Project?): CommitMessageEntity? {
+    private fun getCommitMessage(cmi: CommitMessageI): CommitMessageEntity? {
         return if (cmi is CheckinProjectPanel) {
             val msg = cmi.commitMessage
-            CommitMessageEntity.parse(msg, project)
+            CommitMessageEntity.parse(msg)
         } else {
             null
         }
