@@ -19,6 +19,7 @@ import javax.swing.JTextArea
 import javax.swing.JTextField
 import javax.swing.UIManager
 import javax.swing.plaf.FontUIResource
+import kotlin.math.max
 
 /**
  * 提交规范弹窗
@@ -50,23 +51,16 @@ class CommitSpecificationDialog(project: Project?, message: CommitMessageEntity?
  */
 class CommitSpecificationPanel(private val project: Project?, private val message: CommitMessageEntity?) {
 
-    private var typeOfChangeLabel: JLabel? = null
-    private var typeOfChangePanel: JPanel? = null
     private var typeOfChangeGroup: ButtonGroup? = null
 
-    private var scopeOfChangeLabel: JLabel? = null
     private var scopeOfChangeBox: ComboBox<String>? = null
 
-    private var shortDescriptionLabel: JLabel? = null
     private var shortDescriptionField: JTextField? = null
 
-    private var longDescriptionLabel: JLabel? = null
     private var longDescriptionArea: JTextArea? = null
 
-    private var breakingChangesLabel: JLabel? = null
     private var breakingChangesArea: JTextArea? = null
 
-    private var closedIssuesLabel: JLabel? = null
     private var closedIssuesField: JTextField? = null
 
     private var rowIndex = 0
@@ -95,7 +89,7 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
 
         createClosedIssues(config)
 
-        val panel = JPanel(GridLayoutManager(panelOneMap.size, 2))
+        val panel = JPanel(GridLayoutManager(max(panelOneMap.size, panelTwoMap.size), 2))
         panelOneMap.forEach { (component, constraint) ->
             panel.add(component, constraint)
         }
@@ -120,21 +114,22 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private fun createClosedIssues(config: PanelInfoEntity) {
         if (config.label.closedIssues.isNotBlank()) {
             // 已修复问题
-            closedIssuesLabel = JLabel(config.label.closedIssues)
-            panelOneMap[closedIssuesLabel!!] = createLabelConstraint(rowIndex)
+            val closedIssuesLabel = JLabel(config.label.closedIssues)
+            panelOneMap[closedIssuesLabel] = createLabelConstraint(rowIndex)
 
             closedIssuesField = JTextField()
             closedIssuesField!!.text = message?.closedIssues.orEmpty()
 
             panelTwoMap[closedIssuesField!!] = createConstraint(rowIndex)
+            rowIndex++
         }
     }
 
     private fun createBreakingChanges(config: PanelInfoEntity) {
         if (config.label.breakingChanges.isNotBlank()) {
             // 重大改变
-            breakingChangesLabel = JLabel(config.label.breakingChanges)
-            panelOneMap[breakingChangesLabel!!] = createLabelConstraint(rowIndex)
+            val breakingChangesLabel = JLabel(config.label.breakingChanges)
+            panelOneMap[breakingChangesLabel] = createLabelConstraint(rowIndex)
 
             breakingChangesArea = JTextArea()
             breakingChangesArea!!.text = message?.breakingChanges.orEmpty()
@@ -148,8 +143,8 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private fun createLongDescription(config: PanelInfoEntity) {
         if (config.label.longDescription.isNotBlank()) {
             // 详细说明
-            longDescriptionLabel = JLabel(config.label.longDescription)
-            panelOneMap[longDescriptionLabel!!] = createLabelConstraint(rowIndex)
+            val longDescriptionLabel = JLabel(config.label.longDescription)
+            panelOneMap[longDescriptionLabel] = createLabelConstraint(rowIndex)
 
             longDescriptionArea = JTextArea()
             longDescriptionArea!!.text = message?.longDescription.orEmpty()
@@ -163,8 +158,8 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private fun createShortDescription(config: PanelInfoEntity) {
         if (config.label.shortDescription.isNotBlank()) {
             // 简单说明
-            shortDescriptionLabel = JLabel(config.label.shortDescription)
-            panelOneMap[shortDescriptionLabel!!] = createLabelConstraint(rowIndex)
+            val shortDescriptionLabel = JLabel(config.label.shortDescription)
+            panelOneMap[shortDescriptionLabel] = createLabelConstraint(rowIndex)
 
             shortDescriptionField = JTextField()
             shortDescriptionField!!.text = message?.shortDescription.orEmpty()
@@ -177,8 +172,8 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private fun createScopeOfChange(config: PanelInfoEntity) {
         if (config.label.scopeOfChange.isNotBlank()) {
             // 修改范围
-            scopeOfChangeLabel = JLabel(config.label.scopeOfChange)
-            panelOneMap[scopeOfChangeLabel!!] = createLabelConstraint(rowIndex)
+            val scopeOfChangeLabel = JLabel(config.label.scopeOfChange)
+            panelOneMap[scopeOfChangeLabel] = createLabelConstraint(rowIndex)
             // 范围选框
             scopeOfChangeBox = ComboBox()
             scopeOfChangeBox!!.isEditable = true
@@ -203,11 +198,11 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private fun createTypeOfChange(config: PanelInfoEntity) {
         if (config.label.typeOfChange.isNotBlank()) {
             // 修改类型
-            typeOfChangeLabel = JLabel(config.label.typeOfChange)
-            panelOneMap[typeOfChangeLabel!!] = createLabelConstraint(rowIndex)
+            val typeOfChangeLabel = JLabel(config.label.typeOfChange)
+            panelOneMap[typeOfChangeLabel] = createLabelConstraint(rowIndex)
             // 类型列表
             val typeList = config.changeTypes
-            typeOfChangePanel = JPanel(GridLayoutManager(typeList.size, 1))
+            val typeOfChangePanel = JPanel(GridLayoutManager(typeList.size, 1))
             typeOfChangeGroup = ButtonGroup()
             val defaultConstraint = GridConstraints().apply {
                 anchor = GridConstraints.ANCHOR_WEST
@@ -224,13 +219,13 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
                 val clone = defaultConstraint.clone() as GridConstraints
                 clone.row = index
                 typeOfChangeGroup!!.add(rb)
-                typeOfChangePanel!!.add(rb, clone)
+                typeOfChangePanel.add(rb, clone)
             }
             if (!selected) {
                 typeOfChangeGroup!!.elements.toList().firstOrNull()?.isSelected = true
             }
 
-            panelTwoMap[typeOfChangePanel!!] = createConstraint(rowIndex)
+            panelTwoMap[typeOfChangePanel] = createConstraint(rowIndex)
             rowIndex++
         }
     }
