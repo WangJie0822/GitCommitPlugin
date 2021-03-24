@@ -1,11 +1,10 @@
-# GitCommitPlugin
+# VcsHelperPlugin
 
 ![Build](https://github.com/WangJie0822/VcsHelperPlugin/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/cn.wj.plugin.vcs.svg)](https://plugins.jetbrains.com/plugin/cn.wj.plugin.vcs)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/cn.wj.plugin.vcs.svg)](https://plugins.jetbrains.com/plugin/cn.wj.plugin.vcs)
 
 <!-- Plugin description -->
-
 你可用通过这个插件按照以下模板创建 commit 信息:
 
 ```
@@ -52,18 +51,19 @@
     }
   ]
 }
+```
 <!-- Plugin description end -->
 
 ## Installation
 
 - Using IDE built-in plugin system:
   
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "VcsHelperPlugin"</kbd> >
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "VcsHelper"</kbd> >
   <kbd>Install Plugin</kbd>
   
 - Manually:
 
-  Download the [latest release](https://github.com/WangJie0822/VcsHelperPlugin/releases/latest) and install it manually using
+  Download the [latest release](https://github.com/WangJie0822/VcsHelper/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
 
