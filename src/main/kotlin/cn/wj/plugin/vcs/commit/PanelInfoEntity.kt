@@ -51,6 +51,7 @@ data class PanelInfoEntity(
  */
 @Serializable
 data class LabelEntity(
+    val hint: String = "Hint",
     val typeOfChange: String = "Type of change",
     val scopeOfChange: String = "Scope of change",
     val shortDescription: String = "Short description",

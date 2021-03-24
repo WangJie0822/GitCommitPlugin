@@ -5,6 +5,7 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.uiDesigner.core.GridConstraints
 import com.intellij.uiDesigner.core.GridLayoutManager
+import java.awt.Color
 import java.awt.Component
 import java.awt.Dimension
 import java.awt.Font
@@ -24,7 +25,7 @@ import kotlin.math.max
 /**
  * 提交规范弹窗
  *
- * > [王杰](mailto:w15555650921@gmail.com) 创建于 20201/3/19
+ * > [王杰](mailto:w15555650921@gmail.com) 创建于 2021/3/19
  */
 class CommitSpecificationDialog(project: Project?, message: CommitMessageEntity?) :
     DialogWrapper(project) {
@@ -74,6 +75,8 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
         panelOneMap.clear()
         panelTwoMap.clear()
         rowIndex = 0
+
+        createHint(config)
 
         initGlobalFont()
 
@@ -230,6 +233,19 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
         }
     }
 
+    private fun createHint(config: PanelInfoEntity) {
+        if (config.label.hint.isNotBlank()) {
+            // 提示
+            val hintLabel = JLabel(config.label.hint)
+            hintLabel.font = Font("YaHei", Font.BOLD, TEXT_SIZE_LARGE)
+            hintLabel.foreground = Color.RED
+            panelTwoMap[hintLabel] = createConstraint(rowIndex).apply {
+                anchor = GridConstraints.ANCHOR_CENTER
+            }
+            rowIndex++
+        }
+    }
+
     fun getMessageEntity(): CommitMessageEntity {
         return CommitMessageEntity(
             typeOfChange = getSelectedChangeType(),
@@ -275,5 +291,6 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
         private const val AREA_HEIGHT_DESCRIPTION = 100
         private const val AREA_HEIGHT_BREAKING_CHANGE = 50
         private const val TEXT_SIZE = 12
+        private const val TEXT_SIZE_LARGE = 18
     }
 }

@@ -1,5 +1,6 @@
 {
   "label": {
+    "hint": "每次操作前需先更新，再提交！",
     "typeOfChange": "修改类型",
     "scopeOfChange": "影响范围",
     "shortDescription": "简单说明",
