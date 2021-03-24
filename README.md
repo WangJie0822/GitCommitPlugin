@@ -5,6 +5,7 @@
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/cn.wj.plugin.vcs.svg)](https://plugins.jetbrains.com/plugin/cn.wj.plugin.vcs)
 
 <!-- Plugin description -->
+ [中文](https://github.com/WangJie0822/VcsHelperPlugin/blob/main/README_CN.md)
 
 This plugin allows to create a commit message with the following template:
 
