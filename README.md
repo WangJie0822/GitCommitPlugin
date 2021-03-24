@@ -53,13 +53,14 @@ You can also add **commit_template.json** files to the project root directory to
     }
   ]
 }
+```
 <!-- Plugin description end -->
 
 ## Installation
 
 - Using IDE built-in plugin system:
   
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "VcsHelperPlugin"</kbd> >
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "VcsHelper"</kbd> >
   <kbd>Install Plugin</kbd>
   
 - Manually:
