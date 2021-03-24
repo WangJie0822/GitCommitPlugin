@@ -2,10 +2,6 @@
 
 # VcsHelperPlugin Changelog
 
-## 1.0.0
+## [Unreleased]
 ### Added
 - Custom template `commit_template.json` enabled.
-
-## 1.0.1
-### Modified
-- Reload configuration every time when action is executed.
