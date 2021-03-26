@@ -13,26 +13,9 @@ import java.io.InputStreamReader
  *
  * > [王杰](mailto:w15555650921@gmail.com) 创建于 20201/3/19
  */
-class ConfigHelper private constructor(private val project: Project?) {
+object ConfigHelper {
 
-    private var config: PanelInfoEntity? = null
-
-    var propertiesChanged = false
-
-    /** 面板配置信息 */
-    val panelInfo: PanelInfoEntity
-        get() {
-            if (null == config || propertiesChanged) {
-                config = loadConfig(project)
-                if (propertiesChanged) {
-                    propertiesChanged = false
-                }
-            }
-            return config!!
-        }
-
-    private fun loadConfig(project: Project?): PanelInfoEntity {
-        println("Load Config")
+    fun loadConfig(project: Project?): PanelInfoEntity {
         val projectRoot = project?.basePath.orEmpty()
         val templateFile = File(projectRoot, COMMIT_TEMPLATE_FILE_NAME)
         if (!templateFile.exists()) {
@@ -48,35 +31,4 @@ class ConfigHelper private constructor(private val project: Project?) {
         return sb.toString().toTypeEntity<PanelInfoEntity>() ?: PanelInfoEntity()
     }
 
-    fun init() {
-        config = loadConfig(project)
-    }
-
-    companion object : SingletonHolder<ConfigHelper, Project?>(::ConfigHelper)
-}
-
-open class SingletonHolder<out T, in A>(creator: (A) -> T) {
-    private var creator: ((A) -> T)? = creator
-
-    @Volatile
-    private var instance: T? = null
-
-    fun getInstance(arg: A): T {
-        val i = instance
-        if (i != null) {
-            return i
-        }
-
-        return synchronized(this) {
-            val i2 = instance
-            if (i2 != null) {
-                i2
-            } else {
-                val created = creator!!(arg)
-                instance = created
-                creator = null
-                created
-            }
-        }
-    }
 }

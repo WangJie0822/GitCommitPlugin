@@ -18,8 +18,6 @@ import javax.swing.JPanel
 import javax.swing.JRadioButton
 import javax.swing.JTextArea
 import javax.swing.JTextField
-import javax.swing.UIManager
-import javax.swing.plaf.FontUIResource
 import kotlin.math.max
 
 /**
@@ -70,15 +68,13 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private val panelTwoMap = hashMapOf<Component, Any>()
 
     fun createCenterPanel(): JComponent {
-        val config = ConfigHelper.getInstance(project).panelInfo
+        val config = ConfigHelper.loadConfig(project)
 
         panelOneMap.clear()
         panelTwoMap.clear()
         rowIndex = 0
 
         createHint(config)
-
-        initGlobalFont()
 
         createTypeOfChange(config)
 
@@ -102,25 +98,17 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
         return panel
     }
 
-    private fun initGlobalFont() {
-        val fontRes = FontUIResource(Font("YaHei", Font.PLAIN, TEXT_SIZE))
-        val keys = UIManager.getDefaults().keys()
-        while (keys.hasMoreElements()) {
-            val key = keys.nextElement()
-            val value = UIManager.get(key)
-            if (value is FontUIResource) {
-                UIManager.put(key, fontRes)
-            }
-        }
-    }
-
     private fun createClosedIssues(config: PanelInfoEntity) {
         if (config.label.closedIssues.isNotBlank()) {
             // 已修复问题
-            val closedIssuesLabel = JLabel(config.label.closedIssues)
+            val closedIssuesLabel = JLabel(config.label.closedIssues).apply {
+                font = DIALOG_FONT
+            }
             panelOneMap[closedIssuesLabel] = createLabelConstraint(rowIndex)
 
-            closedIssuesField = JTextField()
+            closedIssuesField = JTextField().apply {
+                font = DIALOG_FONT
+            }
             closedIssuesField!!.text = message?.closedIssues.orEmpty()
 
             panelTwoMap[closedIssuesField!!] = createConstraint(rowIndex)
@@ -131,10 +119,14 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private fun createBreakingChanges(config: PanelInfoEntity) {
         if (config.label.breakingChanges.isNotBlank()) {
             // 重大改变
-            val breakingChangesLabel = JLabel(config.label.breakingChanges)
+            val breakingChangesLabel = JLabel(config.label.breakingChanges).apply {
+                font = DIALOG_FONT
+            }
             panelOneMap[breakingChangesLabel] = createLabelConstraint(rowIndex)
 
-            breakingChangesArea = JTextArea()
+            breakingChangesArea = JTextArea().apply {
+                font = DIALOG_FONT
+            }
             breakingChangesArea!!.text = message?.breakingChanges.orEmpty()
 
             panelTwoMap[breakingChangesArea!!] =
@@ -146,10 +138,14 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private fun createLongDescription(config: PanelInfoEntity) {
         if (config.label.longDescription.isNotBlank()) {
             // 详细说明
-            val longDescriptionLabel = JLabel(config.label.longDescription)
+            val longDescriptionLabel = JLabel(config.label.longDescription).apply {
+                font = DIALOG_FONT
+            }
             panelOneMap[longDescriptionLabel] = createLabelConstraint(rowIndex)
 
-            longDescriptionArea = JTextArea()
+            longDescriptionArea = JTextArea().apply {
+                font = DIALOG_FONT
+            }
             longDescriptionArea!!.text = message?.longDescription.orEmpty()
 
             panelTwoMap[longDescriptionArea!!] =
@@ -161,10 +157,14 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private fun createShortDescription(config: PanelInfoEntity) {
         if (config.label.shortDescription.isNotBlank()) {
             // 简单说明
-            val shortDescriptionLabel = JLabel(config.label.shortDescription)
+            val shortDescriptionLabel = JLabel(config.label.shortDescription).apply {
+                font = DIALOG_FONT
+            }
             panelOneMap[shortDescriptionLabel] = createLabelConstraint(rowIndex)
 
-            shortDescriptionField = JTextField()
+            shortDescriptionField = JTextField().apply {
+                font = DIALOG_FONT
+            }
             shortDescriptionField!!.text = message?.shortDescription.orEmpty()
 
             panelTwoMap[shortDescriptionField!!] = createConstraint(rowIndex)
@@ -175,10 +175,14 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private fun createScopeOfChange(config: PanelInfoEntity) {
         if (config.label.scopeOfChange.isNotBlank()) {
             // 修改范围
-            val scopeOfChangeLabel = JLabel(config.label.scopeOfChange)
+            val scopeOfChangeLabel = JLabel(config.label.scopeOfChange).apply {
+                font = DIALOG_FONT
+            }
             panelOneMap[scopeOfChangeLabel] = createLabelConstraint(rowIndex)
             // 范围选框
-            scopeOfChangeBox = ComboBox()
+            scopeOfChangeBox = ComboBox<String>().apply {
+                font = DIALOG_FONT
+            }
             scopeOfChangeBox!!.isEditable = true
             val path = project?.basePath.orEmpty()
             val workingDirectory = File(path)
@@ -201,7 +205,9 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     private fun createTypeOfChange(config: PanelInfoEntity) {
         if (config.label.typeOfChange.isNotBlank()) {
             // 修改类型
-            val typeOfChangeLabel = JLabel(config.label.typeOfChange)
+            val typeOfChangeLabel = JLabel(config.label.typeOfChange).apply {
+                font = DIALOG_FONT
+            }
             panelOneMap[typeOfChangeLabel] = createLabelConstraint(rowIndex)
             // 类型列表
             val typeList = config.changeTypes
@@ -213,7 +219,9 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
             }
             var selected = false
             typeList.forEachIndexed { index, changeType ->
-                val rb = JRadioButton(changeType.toString())
+                val rb = JRadioButton(changeType.toString()).apply {
+                    font = DIALOG_FONT
+                }
                 rb.actionCommand = changeType.action
                 if (message?.typeOfChange?.action == changeType.action) {
                     rb.isSelected = true
@@ -258,7 +266,7 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
     }
 
     private fun getSelectedChangeType(): ChangeTypeEntity {
-        val typeList = ConfigHelper.getInstance(project).panelInfo.changeTypes
+        val typeList = ConfigHelper.loadConfig(project).changeTypes
         val selectedButton = typeOfChangeGroup?.elements?.toList()?.firstOrNull {
             it.isSelected
         } ?: return typeList.first()
@@ -292,5 +300,6 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
         private const val AREA_HEIGHT_BREAKING_CHANGE = 50
         private const val TEXT_SIZE = 12
         private const val TEXT_SIZE_LARGE = 18
+        private val DIALOG_FONT = Font("YaHei", Font.PLAIN, TEXT_SIZE)
     }
 }

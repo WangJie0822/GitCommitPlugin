@@ -11,11 +11,6 @@
     <extensions defaultExtensionNs="com.intellij">
     </extensions>
 
-    <applicationListeners>
-        <listener class="cn.wj.plugin.vcs.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
-
     <actions>
         <action id="Wj.Vcs.CommitTemplate" class="cn.wj.plugin.vcs.commit.CreateCommitAction"
                 text="Create Commit Message"
