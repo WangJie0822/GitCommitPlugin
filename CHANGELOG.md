@@ -1,11 +1,12 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# VcsHelperPlugin Changelog
+# VcsHelper Changelog
 
 ## 1.0.0
 ### Added
 - Custom template `commit_template.json` enabled.
 
 ## 1.0.1
-### Modified
-- Reload configuration every time when action is executed.
+### Fixed
+- Opening the project in the current window will cause configuration confusion.
+- Global font causes IDEA default font to be modified.
