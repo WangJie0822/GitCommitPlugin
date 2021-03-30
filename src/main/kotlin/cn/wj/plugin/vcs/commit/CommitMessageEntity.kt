@@ -95,7 +95,7 @@ data class CommitMessageEntity(
 
     companion object {
 
-        fun parse(message: String, project:Project?): CommitMessageEntity {
+        fun parse(message: String, project: Project?): CommitMessageEntity {
             val result = CommitMessageEntity()
             val strings = message.split("\n".toRegex()).toTypedArray()
             if (strings.isEmpty()) {

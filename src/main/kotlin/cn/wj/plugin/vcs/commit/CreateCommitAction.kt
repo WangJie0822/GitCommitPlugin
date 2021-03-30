@@ -11,6 +11,8 @@ import com.intellij.openapi.vcs.ui.Refreshable
 
 /**
  * 创建提交按钮
+ *
+ * > [王杰](mailto:w15555650921@gmail.com) 创建于 20201/3/19
  */
 class CreateCommitAction :
     DumbAwareAction() {

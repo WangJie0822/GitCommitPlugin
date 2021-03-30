@@ -30,5 +30,4 @@ object ConfigHelper {
         }
         return sb.toString().toTypeEntity<PanelInfoEntity>() ?: PanelInfoEntity()
     }
-
 }

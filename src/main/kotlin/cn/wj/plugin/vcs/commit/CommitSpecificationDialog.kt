@@ -1,13 +1,12 @@
 package cn.wj.plugin.vcs.commit
 
+import cn.wj.plugin.vcs.ui.fillX
+import cn.wj.plugin.vcs.ui.migLayout
+import cn.wj.plugin.vcs.ui.migLayoutVertical
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.uiDesigner.core.GridConstraints
-import com.intellij.uiDesigner.core.GridLayoutManager
-import java.awt.Component
-import java.awt.Dimension
-import java.awt.Font
+import net.miginfocom.layout.CC
 import java.io.File
 import java.util.function.Consumer
 import javax.swing.ButtonGroup
@@ -17,7 +16,6 @@ import javax.swing.JPanel
 import javax.swing.JRadioButton
 import javax.swing.JTextArea
 import javax.swing.JTextField
-import kotlin.math.max
 
 /**
  * 提交规范弹窗
@@ -61,180 +59,72 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
 
     private var closedIssuesField: JTextField? = null
 
-    private var rowIndex = 0
-
-    private val panelOneMap = hashMapOf<Component, Any>()
-    private val panelTwoMap = hashMapOf<Component, Any>()
-
     fun createCenterPanel(): JComponent {
         val config = ConfigHelper.loadConfig(project)
 
-        panelOneMap.clear()
-        panelTwoMap.clear()
-        rowIndex = 0
-
-        createTypeOfChange(config)
-
-        createScopeOfChange(config)
-
-        createShortDescription(config)
-
-        createLongDescription(config)
-
-        createBreakingChanges(config)
-
-        createClosedIssues(config)
-
-        val panel = JPanel(GridLayoutManager(max(panelOneMap.size, panelTwoMap.size), 2))
-        panelOneMap.forEach { (component, constraint) ->
-            panel.add(component, constraint)
-        }
-        panelTwoMap.forEach { (component, constraint) ->
-            panel.add(component, constraint)
-        }
-        return panel
-    }
-
-    private fun createClosedIssues(config: PanelInfoEntity) {
-        if (config.label.closedIssues.isNotBlank()) {
-            // 已修复问题
-            val closedIssuesLabel = JLabel(config.label.closedIssues).apply {
-                font = DIALOG_FONT
-            }
-            panelOneMap[closedIssuesLabel] = createLabelConstraint(rowIndex)
-
-            closedIssuesField = JTextField().apply {
-                font = DIALOG_FONT
-            }
-            closedIssuesField!!.text = message?.closedIssues.orEmpty()
-
-            panelTwoMap[closedIssuesField!!] = createConstraint(rowIndex)
-            rowIndex++
-        }
-    }
-
-    private fun createBreakingChanges(config: PanelInfoEntity) {
-        if (config.label.breakingChanges.isNotBlank()) {
-            // 重大改变
-            val breakingChangesLabel = JLabel(config.label.breakingChanges).apply {
-                font = DIALOG_FONT
-            }
-            panelOneMap[breakingChangesLabel] = createLabelConstraint(rowIndex)
-
-            breakingChangesArea = JTextArea().apply {
-                font = DIALOG_FONT
-            }
-            breakingChangesArea!!.text = message?.breakingChanges.orEmpty()
-
-            panelTwoMap[breakingChangesArea!!] =
-                createConstraint(rowIndex, Dimension(AREA_WIDTH, AREA_HEIGHT_BREAKING_CHANGE))
-            rowIndex++
-        }
-    }
-
-    private fun createLongDescription(config: PanelInfoEntity) {
-        if (config.label.longDescription.isNotBlank()) {
-            // 详细说明
-            val longDescriptionLabel = JLabel(config.label.longDescription).apply {
-                font = DIALOG_FONT
-            }
-            panelOneMap[longDescriptionLabel] = createLabelConstraint(rowIndex)
-
-            longDescriptionArea = JTextArea().apply {
-                font = DIALOG_FONT
-            }
-            longDescriptionArea!!.text = message?.longDescription.orEmpty()
-
-            panelTwoMap[longDescriptionArea!!] =
-                createConstraint(rowIndex, Dimension(AREA_WIDTH, AREA_HEIGHT_DESCRIPTION))
-            rowIndex++
-        }
-    }
-
-    private fun createShortDescription(config: PanelInfoEntity) {
-        if (config.label.shortDescription.isNotBlank()) {
-            // 简单说明
-            val shortDescriptionLabel = JLabel(config.label.shortDescription).apply {
-                font = DIALOG_FONT
-            }
-            panelOneMap[shortDescriptionLabel] = createLabelConstraint(rowIndex)
-
-            shortDescriptionField = JTextField().apply {
-                font = DIALOG_FONT
-            }
-            shortDescriptionField!!.text = message?.shortDescription.orEmpty()
-
-            panelTwoMap[shortDescriptionField!!] = createConstraint(rowIndex)
-            rowIndex++
-        }
-    }
-
-    private fun createScopeOfChange(config: PanelInfoEntity) {
-        if (config.label.scopeOfChange.isNotBlank()) {
-            // 修改范围
-            val scopeOfChangeLabel = JLabel(config.label.scopeOfChange).apply {
-                font = DIALOG_FONT
-            }
-            panelOneMap[scopeOfChangeLabel] = createLabelConstraint(rowIndex)
-            // 范围选框
-            scopeOfChangeBox = ComboBox<String>().apply {
-                font = DIALOG_FONT
-            }
-            scopeOfChangeBox!!.isEditable = true
-            val path = project?.basePath.orEmpty()
-            val workingDirectory = File(path)
-            val result = GitLogQuery(workingDirectory).execute()
-            if (result.isSuccess()) {
-                scopeOfChangeBox!!.addItem("")
-                result.getScopes().forEach(
-                    Consumer { item: String? ->
-                        scopeOfChangeBox!!.addItem(item)
-                    }
-                )
-            }
-            scopeOfChangeBox!!.selectedItem = message?.scopeOfChange.orEmpty()
-
-            panelTwoMap[scopeOfChangeBox!!] = createConstraint(rowIndex)
-            rowIndex++
-        }
-    }
-
-    private fun createTypeOfChange(config: PanelInfoEntity) {
-        if (config.label.typeOfChange.isNotBlank()) {
+        return JPanel(migLayout()).apply {
             // 修改类型
-            val typeOfChangeLabel = JLabel(config.label.typeOfChange).apply {
-                font = DIALOG_FONT
-            }
-            panelOneMap[typeOfChangeLabel] = createLabelConstraint(rowIndex)
-            // 类型列表
-            val typeList = config.changeTypes
-            val typeOfChangePanel = JPanel(GridLayoutManager(typeList.size, 1))
-            typeOfChangeGroup = ButtonGroup()
-            val defaultConstraint = GridConstraints().apply {
-                anchor = GridConstraints.ANCHOR_WEST
-                hSizePolicy = GridConstraints.SIZEPOLICY_CAN_GROW or GridConstraints.SIZEPOLICY_WANT_GROW
-            }
-            var selected = false
-            typeList.forEachIndexed { index, changeType ->
-                val rb = JRadioButton(changeType.toString()).apply {
-                    font = DIALOG_FONT
-                }
-                rb.actionCommand = changeType.action
-                if (message?.typeOfChange?.action == changeType.action) {
-                    rb.isSelected = true
-                    selected = true
-                }
-                val clone = defaultConstraint.clone() as GridConstraints
-                clone.row = index
-                typeOfChangeGroup!!.add(rb)
-                typeOfChangePanel.add(rb, clone)
-            }
-            if (!selected) {
-                typeOfChangeGroup!!.elements.toList().firstOrNull()?.isSelected = true
-            }
+            add(JLabel(config.label.typeOfChange))
+            add(
+                JPanel(migLayoutVertical()).apply {
+                    typeOfChangeGroup = ButtonGroup()
+                    var selected = false
+                    config.changeTypes.forEach { changeType ->
+                        val rb = JRadioButton(changeType.toString()).apply {
+                            actionCommand = changeType.action
+                            if (message?.typeOfChange?.action == changeType.action) {
+                                isSelected = true
+                                selected = true
+                            }
+                        }
+                        typeOfChangeGroup!!.add(rb)
+                        add(rb, fillX())
+                    }
+                    if (!selected) {
+                        typeOfChangeGroup!!.elements.toList().firstOrNull()?.isSelected = true
+                    }
+                },
+                fillX().gap("5", "5", "5", "5").wrap()
+            )
 
-            panelTwoMap[typeOfChangePanel] = createConstraint(rowIndex)
-            rowIndex++
+            // 影响范围
+            add(JLabel(config.label.scopeOfChange), CC())
+            scopeOfChangeBox = ComboBox<String>().apply {
+                isEditable = true
+                val path = project?.basePath.orEmpty()
+                val workingDirectory = File(path)
+                val result = GitLogQuery(workingDirectory).execute()
+                if (result.isSuccess()) {
+                    addItem("")
+                    result.getScopes().forEach(
+                        Consumer { item: String? ->
+                            addItem(item)
+                        }
+                    )
+                }
+                selectedItem = message?.scopeOfChange.orEmpty()
+            }
+            add(scopeOfChangeBox!!, fillX().gap("5", "5", "5", "5").wrap())
+
+            // 简单说明
+            add(JLabel(config.label.shortDescription))
+            shortDescriptionField = JTextField(message?.shortDescription.orEmpty())
+            add(shortDescriptionField!!, fillX().gap("5", "5", "5", "5").wrap())
+
+            // 详细说明
+            add(JLabel(config.label.longDescription))
+            longDescriptionArea = JTextArea(message?.longDescription.orEmpty())
+            add(longDescriptionArea!!, fillX().gap("5", "5", "5", "5").minWidth("200").minHeight("100").wrap())
+
+            // 重大改变
+            add(JLabel(config.label.breakingChanges))
+            breakingChangesArea = JTextArea(message?.breakingChanges.orEmpty())
+            add(breakingChangesArea!!, fillX().gap("5", "5", "5", "5").minWidth("200").minHeight("50").wrap())
+
+            // 关闭的问题
+            add(JLabel(config.label.closedIssues))
+            closedIssuesField = JTextField(message?.closedIssues.orEmpty())
+            add(closedIssuesField!!, fillX().gap("5", "5", "5", "5").wrap())
         }
     }
 
@@ -257,32 +147,5 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
         return typeList.firstOrNull {
             it.action == selectedButton.actionCommand
         } ?: typeList.first()
-    }
-
-    private fun createLabelConstraint(row: Int): GridConstraints {
-        return GridConstraints().apply {
-            this.row = row
-        }
-    }
-
-    private fun createConstraint(
-        row: Int,
-        preferredSize: Dimension = Dimension(-1, -1)
-    ): GridConstraints {
-        return GridConstraints(
-            row, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-            GridConstraints.FILL_BOTH,
-            GridConstraints.SIZEPOLICY_CAN_GROW or GridConstraints.SIZEPOLICY_CAN_SHRINK,
-            GridConstraints.SIZEPOLICY_CAN_GROW or GridConstraints.SIZEPOLICY_CAN_SHRINK,
-            Dimension(-1, -1), preferredSize, Dimension(-1, -1)
-        )
-    }
-
-    companion object {
-        private const val AREA_WIDTH = 150
-        private const val AREA_HEIGHT_DESCRIPTION = 100
-        private const val AREA_HEIGHT_BREAKING_CHANGE = 50
-        private const val TEXT_SIZE = 12
-        private val DIALOG_FONT = Font("YaHei", Font.PLAIN, TEXT_SIZE)
     }
 }
