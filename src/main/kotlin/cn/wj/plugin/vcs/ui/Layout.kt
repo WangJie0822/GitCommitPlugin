@@ -40,5 +40,3 @@ fun lineToRight(): Border = JBUI.Borders.customLine(getBordersColor(), 0, 0, 0, 
 operator fun Border.plus(external: Border): Border = JBUI.Borders.merge(this, external, true)
 
 fun getBordersColor(default: Color? = null): Color? = UIManager.getColor("Borders.color") ?: default
-
-fun CC.gap(size: Int) = gap(size.toString(), size.toString(), size.toString(), size.toString())

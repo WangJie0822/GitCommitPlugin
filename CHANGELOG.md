@@ -10,3 +10,7 @@
 ### Fixed
 - Opening the project in the current window will cause configuration confusion.
 - Global font causes IDEA default font to be modified.
+
+## 1.0.2
+### Added
+- Add Settings Panel.

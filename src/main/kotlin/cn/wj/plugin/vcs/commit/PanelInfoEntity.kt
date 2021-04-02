@@ -86,6 +86,10 @@ data class ChangeTypeEntity(
     val description: String = ""
 ) {
     override fun toString(): String {
+        return "$title - $action - $description"
+    }
+
+    fun display(): String {
         return "$title - $description"
     }
 }

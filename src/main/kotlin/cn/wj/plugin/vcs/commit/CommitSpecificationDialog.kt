@@ -70,7 +70,7 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
                     typeOfChangeGroup = ButtonGroup()
                     var selected = false
                     config.changeTypes.forEach { changeType ->
-                        val rb = JRadioButton(changeType.toString()).apply {
+                        val rb = JRadioButton(changeType.display()).apply {
                             actionCommand = changeType.action
                             if (message?.typeOfChange?.action == changeType.action) {
                                 isSelected = true

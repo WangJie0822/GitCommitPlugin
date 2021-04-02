@@ -9,6 +9,9 @@
     <depends>com.intellij.modules.vcs</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable groupId="tools"
+                                 instance="cn.wj.plugin.vcs.settings.OptionsConfiguration"/>
+        <applicationService serviceImplementation="cn.wj.plugin.vcs.storage.Options"/>
     </extensions>
 
     <actions>
