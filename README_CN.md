@@ -15,17 +15,11 @@
 <footer>
 ```
 
-你还可以在项目的根目录下添加 **commit_template.json** 文件来修改默认配置:
+你还可以通过 <kbd>Settings/Preferences</kbd> > <kbd>Tools</kbd> > <kbd>VcsHelper</kbd> 修改配置
+
+或者添加像下面格式的 `*.json` 文件来自定义配置:
 ```json
 {
-  "label": {
-    "typeOfChange": "修改类型",
-    "scopeOfChange": "影响范围",
-    "shortDescription": "简单说明",
-    "longDescription": "详细说明",
-    "breakingChanges": "重大改变",
-    "closedIssues": "关闭的问题"
-  },
   "keywords": {
     "wrapWords": true,
     "maxLineLength": 70,

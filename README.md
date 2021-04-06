@@ -15,18 +15,11 @@ This plugin allows to create a commit message with the following template:
 <BLANK LINE>
 <footer>
 ```
+You can also customize your own build rules through <kbd>Settings/Preferences</kbd> > <kbd>Tools</kbd> > <kbd>VcsHelper</kbd>
 
-You can also add **commit_template.json** files to the project root directory to modify the default configuration:
+Or add the `*.json` configuration file like this:
 ```json
 {
-  "label": {
-    "typeOfChange": "Type of change",
-    "scopeOfChange": "Scope of change",
-    "shortDescription": "short description",
-    "longDescription": "long description",
-    "breakingChanges": "Breaking changes",
-    "closedIssues": "Closed issues"
-  },
   "keywords": {
     "wrapWords": true,
     "maxLineLength": 70,
