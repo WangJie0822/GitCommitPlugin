@@ -1,6 +1,6 @@
 package cn.wj.plugin.vcs.constants
 
-import cn.wj.plugin.vcs.commit.ChangeTypeEntity
+import cn.wj.plugin.vcs.entity.ChangeTypeEntity
 import cn.wj.plugin.vcs.tools.toJsonString
 
 /** 默认提交模板配置文件名 */

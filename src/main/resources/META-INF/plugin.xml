@@ -9,13 +9,16 @@
     <depends>com.intellij.modules.vcs</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <checkoutCompletedListener implementation="cn.wj.plugin.vcs.extensions.listener.VcsUpdateCompleteListener"
+                                   id="Wj.Vcs.VcsUpdateCompleteListener"/>
+
         <applicationConfigurable groupId="tools"
-                                 instance="cn.wj.plugin.vcs.settings.OptionsConfiguration"/>
+                                 instance="cn.wj.plugin.vcs.extensions.configurable.OptionsConfigurable"/>
         <applicationService serviceImplementation="cn.wj.plugin.vcs.storage.Options"/>
     </extensions>
 
     <actions>
-        <action id="Wj.Vcs.CommitTemplate" class="cn.wj.plugin.vcs.commit.CreateCommitAction"
+        <action id="Wj.Vcs.CommitTemplate" class="cn.wj.plugin.vcs.action.CreateCommitAction"
                 text="Create Commit Message"
                 description="Create commit message by template"
                 icon="/icons/load.png">

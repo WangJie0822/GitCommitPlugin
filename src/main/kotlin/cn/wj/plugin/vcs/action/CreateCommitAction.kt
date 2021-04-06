@@ -1,5 +1,7 @@
-package cn.wj.plugin.vcs.commit
+package cn.wj.plugin.vcs.action
 
+import cn.wj.plugin.vcs.dialog.CommitSpecificationDialog
+import cn.wj.plugin.vcs.entity.CommitMessageEntity
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
@@ -7,6 +9,8 @@ import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.vcs.CheckinProjectPanel
 import com.intellij.openapi.vcs.CommitMessageI
 import com.intellij.openapi.vcs.VcsDataKeys
+import com.intellij.openapi.vcs.actions.CommonCheckinProjectAction
+import com.intellij.openapi.vcs.actions.VcsContextWrapper
 import com.intellij.openapi.vcs.ui.Refreshable
 
 /**
@@ -21,7 +25,13 @@ class CreateCommitAction :
         isEnabledInModalContext = true
     }
 
+    private val commitProjectAction = object : CommonCheckinProjectAction() {}
+
     override fun actionPerformed(e: AnActionEvent) {
+
+        val cw = VcsContextWrapper.createCachedInstanceOn(e)
+        commitProjectAction.actionPerformed(e)
+
         val cmi = getCommitMessageI(e) ?: return
         val commitMessage = getCommitMessage(cmi, e.project)
         val dialog = CommitSpecificationDialog(e.project, commitMessage)

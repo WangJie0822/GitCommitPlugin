@@ -1,5 +1,6 @@
-package cn.wj.plugin.vcs.commit
+package cn.wj.plugin.vcs.entity
 
+import cn.wj.plugin.vcs.tools.ConfigHelper
 import com.intellij.openapi.project.Project
 import org.apache.commons.lang.StringUtils
 import org.apache.commons.lang.WordUtils

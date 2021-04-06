@@ -1,4 +1,4 @@
-package cn.wj.plugin.vcs.commit
+package cn.wj.plugin.vcs.entity
 
 import kotlinx.serialization.Serializable
 

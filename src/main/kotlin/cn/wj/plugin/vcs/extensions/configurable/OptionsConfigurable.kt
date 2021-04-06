@@ -1,9 +1,9 @@
-package cn.wj.plugin.vcs.settings
+package cn.wj.plugin.vcs.extensions.configurable
 
 import cn.wj.plugin.vcs.R
 import cn.wj.plugin.vcs.bundle.getString
-import cn.wj.plugin.vcs.commit.ChangeTypeEntity
-import cn.wj.plugin.vcs.commit.ConfigHelper
+import cn.wj.plugin.vcs.entity.ChangeTypeEntity
+import cn.wj.plugin.vcs.tools.ConfigHelper
 import cn.wj.plugin.vcs.constants.DEFAULT_AUTO_WRAP_LENGTH
 import cn.wj.plugin.vcs.constants.DEFAULT_BREAKING_CHANGES
 import cn.wj.plugin.vcs.constants.DEFAULT_BREAKING_CHANGES_WHEN_EMPTY
@@ -18,6 +18,7 @@ import cn.wj.plugin.vcs.constants.DEFAULT_TEXT_AUTO_WRAP
 import cn.wj.plugin.vcs.constants.DEFAULT_TYPE_OF_CHANGE_LIST
 import cn.wj.plugin.vcs.constants.DEFAULT_USE_JSON_CONFIG
 import cn.wj.plugin.vcs.constants.PROJECT_PATH_PLACEHOLDER
+import cn.wj.plugin.vcs.dialog.TypeOfChangeDialog
 import cn.wj.plugin.vcs.storage.Options
 import cn.wj.plugin.vcs.tools.toJsonString
 import cn.wj.plugin.vcs.tools.toTypeEntity
@@ -53,12 +54,12 @@ import javax.swing.ListSelectionModel
  *
  * > [王杰](mailto:w15555650921@gmail.com) 创建于 20201/3/29
  */
-class OptionsConfiguration : SearchableConfigurable, Disposable {
+class OptionsConfigurable : SearchableConfigurable, Disposable {
 
-    private var panel: OptionsConfigurationPanel? = null
+    private var panel: OptionsConfigurablePanel? = null
 
     override fun createComponent(): JComponent {
-        return OptionsConfigurationPanel().let {
+        return OptionsConfigurablePanel().let {
             panel = it
             it.createCenterPanel()
         }
@@ -88,7 +89,7 @@ class OptionsConfiguration : SearchableConfigurable, Disposable {
 /**
  * 选项配置面板
  */
-class OptionsConfigurationPanel {
+class OptionsConfigurablePanel {
 
     /** 选项配置 */
     private val options = Options.instance

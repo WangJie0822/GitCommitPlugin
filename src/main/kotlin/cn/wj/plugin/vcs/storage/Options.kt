@@ -1,8 +1,8 @@
 package cn.wj.plugin.vcs.storage
 
-import cn.wj.plugin.vcs.commit.ChangeTypeEntity
-import cn.wj.plugin.vcs.commit.KeywordsEntity
-import cn.wj.plugin.vcs.commit.PanelInfoEntity
+import cn.wj.plugin.vcs.entity.ChangeTypeEntity
+import cn.wj.plugin.vcs.entity.KeywordsEntity
+import cn.wj.plugin.vcs.entity.PanelInfoEntity
 import cn.wj.plugin.vcs.constants.DEFAULT_AUTO_WRAP_LENGTH
 import cn.wj.plugin.vcs.constants.DEFAULT_AUTO_WRAP_LENGTH_INT
 import cn.wj.plugin.vcs.constants.DEFAULT_BREAKING_CHANGES

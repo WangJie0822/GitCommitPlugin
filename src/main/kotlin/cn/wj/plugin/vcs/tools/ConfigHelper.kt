@@ -1,8 +1,8 @@
-package cn.wj.plugin.vcs.commit
+package cn.wj.plugin.vcs.tools
 
+import cn.wj.plugin.vcs.entity.PanelInfoEntity
 import cn.wj.plugin.vcs.constants.PROJECT_PATH_PLACEHOLDER
 import cn.wj.plugin.vcs.storage.Options
-import cn.wj.plugin.vcs.tools.toTypeEntity
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import java.io.BufferedReader

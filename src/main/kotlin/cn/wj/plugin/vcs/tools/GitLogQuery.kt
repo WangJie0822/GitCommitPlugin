@@ -1,4 +1,4 @@
-package cn.wj.plugin.vcs.commit
+package cn.wj.plugin.vcs.tools
 
 import java.io.BufferedReader
 import java.io.File

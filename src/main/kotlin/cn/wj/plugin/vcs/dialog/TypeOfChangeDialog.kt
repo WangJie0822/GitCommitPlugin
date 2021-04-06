@@ -1,8 +1,8 @@
-package cn.wj.plugin.vcs.settings
+package cn.wj.plugin.vcs.dialog
 
 import cn.wj.plugin.vcs.R
 import cn.wj.plugin.vcs.bundle.getString
-import cn.wj.plugin.vcs.commit.ChangeTypeEntity
+import cn.wj.plugin.vcs.entity.ChangeTypeEntity
 import cn.wj.plugin.vcs.ui.fillX
 import cn.wj.plugin.vcs.ui.migLayout
 import com.intellij.openapi.project.Project
