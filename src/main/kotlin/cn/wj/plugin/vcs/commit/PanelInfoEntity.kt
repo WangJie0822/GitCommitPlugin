@@ -9,7 +9,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class PanelInfoEntity(
-    val label: LabelEntity = LabelEntity(),
     val keywords: KeywordsEntity = KeywordsEntity(),
     val changeTypes: ArrayList<ChangeTypeEntity> = arrayListOf(
         ChangeTypeEntity("FEAT", "Features", "A new feature"),
@@ -44,19 +43,6 @@ data class PanelInfoEntity(
         ChangeTypeEntity("Chores", "CHORE", "Other changes that don't modify src or test files"),
         ChangeTypeEntity("Reverts", "REVERT", "Reverts a previous commit")
     )
-)
-
-/**
- * 标签文本数据
- */
-@Serializable
-data class LabelEntity(
-    val typeOfChange: String = "Type of change",
-    val scopeOfChange: String = "Scope of change",
-    val shortDescription: String = "Short description",
-    val longDescription: String = "Long description",
-    val breakingChanges: String = "Breaking changes",
-    val closedIssues: String = "Closed issues"
 )
 
 /**

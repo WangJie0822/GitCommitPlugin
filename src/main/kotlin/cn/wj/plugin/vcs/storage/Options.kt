@@ -2,9 +2,9 @@ package cn.wj.plugin.vcs.storage
 
 import cn.wj.plugin.vcs.commit.ChangeTypeEntity
 import cn.wj.plugin.vcs.commit.KeywordsEntity
-import cn.wj.plugin.vcs.commit.LabelEntity
 import cn.wj.plugin.vcs.commit.PanelInfoEntity
 import cn.wj.plugin.vcs.constants.DEFAULT_AUTO_WRAP_LENGTH
+import cn.wj.plugin.vcs.constants.DEFAULT_AUTO_WRAP_LENGTH_INT
 import cn.wj.plugin.vcs.constants.DEFAULT_BREAKING_CHANGES
 import cn.wj.plugin.vcs.constants.DEFAULT_BREAKING_CHANGES_WHEN_EMPTY
 import cn.wj.plugin.vcs.constants.DEFAULT_CLOSED_ISSUES
@@ -79,10 +79,9 @@ class Options : PersistentStateComponent<Options> {
 
     fun toPanelEntity(): PanelInfoEntity {
         return PanelInfoEntity(
-            label = LabelEntity(),
             keywords = KeywordsEntity(
                 wrapWords = textAutoWrap,
-                maxLineLength = autoWrapLength.toIntOrNull() ?: 70,
+                maxLineLength = autoWrapLength.toIntOrNull() ?: DEFAULT_AUTO_WRAP_LENGTH_INT,
                 scopeWrapperStart = scopeWrapperStart,
                 scopeWrapperEnd = scopeWrapperEnd,
                 descriptionSeparator = descriptionSeparator,

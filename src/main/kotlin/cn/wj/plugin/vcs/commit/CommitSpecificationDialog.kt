@@ -1,5 +1,7 @@
 package cn.wj.plugin.vcs.commit
 
+import cn.wj.plugin.vcs.R
+import cn.wj.plugin.vcs.bundle.getString
 import cn.wj.plugin.vcs.ui.fillX
 import cn.wj.plugin.vcs.ui.migLayout
 import cn.wj.plugin.vcs.ui.migLayoutVertical
@@ -28,8 +30,8 @@ class CommitSpecificationDialog(project: Project?, message: CommitMessageEntity?
     private val panel = CommitSpecificationPanel(project, message)
 
     init {
-        title = "Commit"
-        setOKButtonText("OK")
+        title = getString(R.String.commit_dialog_title)
+        setOKButtonText(getString(R.String.general_confirm))
         init()
     }
 
@@ -64,7 +66,7 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
 
         return JPanel(migLayout()).apply {
             // 修改类型
-            add(JLabel(config.label.typeOfChange))
+            add(JLabel(getString(R.String.commit_type_of_change)))
             add(
                 JPanel(migLayoutVertical()).apply {
                     typeOfChangeGroup = ButtonGroup()
@@ -88,7 +90,7 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
             )
 
             // 影响范围
-            add(JLabel(config.label.scopeOfChange), CC())
+            add(JLabel(getString(R.String.commit_scope_of_change)), CC())
             scopeOfChangeBox = ComboBox<String>().apply {
                 isEditable = true
                 val path = project?.basePath.orEmpty()
@@ -107,22 +109,22 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
             add(scopeOfChangeBox!!, fillX().gap("5", "5", "5", "5").wrap())
 
             // 简单说明
-            add(JLabel(config.label.shortDescription))
+            add(JLabel(getString(R.String.commit_short_description)))
             shortDescriptionField = JTextField(message?.shortDescription.orEmpty())
             add(shortDescriptionField!!, fillX().gap("5", "5", "5", "5").wrap())
 
             // 详细说明
-            add(JLabel(config.label.longDescription))
+            add(JLabel(getString(R.String.commit_long_description)))
             longDescriptionArea = JTextArea(message?.longDescription.orEmpty())
             add(longDescriptionArea!!, fillX().gap("5", "5", "5", "5").minWidth("200").minHeight("100").wrap())
 
             // 重大改变
-            add(JLabel(config.label.breakingChanges))
+            add(JLabel(getString(R.String.commit_breaking_changes)))
             breakingChangesArea = JTextArea(message?.breakingChanges.orEmpty())
             add(breakingChangesArea!!, fillX().gap("5", "5", "5", "5").minWidth("200").minHeight("50").wrap())
 
             // 关闭的问题
-            add(JLabel(config.label.closedIssues))
+            add(JLabel(getString(R.String.commit_closed_issues)))
             closedIssuesField = JTextField(message?.closedIssues.orEmpty())
             add(closedIssuesField!!, fillX().gap("5", "5", "5", "5").wrap())
         }

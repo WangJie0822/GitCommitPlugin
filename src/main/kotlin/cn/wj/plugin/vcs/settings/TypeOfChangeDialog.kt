@@ -1,5 +1,7 @@
 package cn.wj.plugin.vcs.settings
 
+import cn.wj.plugin.vcs.R
+import cn.wj.plugin.vcs.bundle.getString
 import cn.wj.plugin.vcs.commit.ChangeTypeEntity
 import cn.wj.plugin.vcs.ui.fillX
 import cn.wj.plugin.vcs.ui.migLayout
@@ -24,8 +26,8 @@ class TypeOfChangeDialog(
 ) : DialogWrapper(project) {
 
     init {
-        title = "修改类型"
-        setOKButtonText("确认")
+        title = getString(R.String.setting_type_of_change)
+        setOKButtonText(getString(R.String.general_confirm))
         init()
     }
 
@@ -75,12 +77,12 @@ class TypeOfChangePanel(entity: ChangeTypeEntity?) {
 
     fun createCenterPanel(): JComponent {
         return JPanel(migLayout()).apply {
-            add(JLabel("标题"), CC().gapAfter("5").split())
+            add(JLabel(getString(R.String.setting_create_title)), CC().gapAfter("5").split())
             add(tfTitle, CC().gapAfter("10").growX().minWidth("100"))
-            add(JLabel("动作"), CC().gapAfter("5"))
+            add(JLabel(getString(R.String.setting_create_action)), CC().gapAfter("5"))
             add(tfAction, fillX().minWidth("100").wrap())
 
-            add(JLabel("描述"), fillX().wrap())
+            add(JLabel(getString(R.String.setting_create_description)), fillX().wrap())
             add(taDescription, fillX().minHeight("50").wrap())
         }
     }

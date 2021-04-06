@@ -20,6 +20,7 @@ const val DEFAULT_TEXT_AUTO_WRAP = true
 
 /** 单行长度 */
 const val DEFAULT_AUTO_WRAP_LENGTH = "70"
+val DEFAULT_AUTO_WRAP_LENGTH_INT = DEFAULT_AUTO_WRAP_LENGTH.toInt()
 
 /** 影响范围包裹符号左 */
 const val DEFAULT_SCOPE_WRAPPER_START = "("

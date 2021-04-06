@@ -1,5 +1,7 @@
 package cn.wj.plugin.vcs.settings
 
+import cn.wj.plugin.vcs.R
+import cn.wj.plugin.vcs.bundle.getString
 import cn.wj.plugin.vcs.commit.ChangeTypeEntity
 import cn.wj.plugin.vcs.commit.ConfigHelper
 import cn.wj.plugin.vcs.constants.DEFAULT_AUTO_WRAP_LENGTH
@@ -71,7 +73,7 @@ class OptionsConfiguration : SearchableConfigurable, Disposable {
     }
 
     override fun getDisplayName(): String {
-        return "VcsHelper"
+        return getString(R.String.setting_name)
     }
 
     override fun getId(): String {
@@ -91,13 +93,13 @@ class OptionsConfigurationPanel {
     /** 选项配置 */
     private val options = Options.instance
 
-    private val cbUseJsonConfig = JCheckBox("是否使用文件配置").apply {
+    private val cbUseJsonConfig = JCheckBox(getString(R.String.setting_use_file_config)).apply {
         isSelected = options.useJsonConfig
     }
 
     private val tfConfigPath = JTextField(options.jsonConfigPath)
 
-    private val cbTextAutoWrap = JCheckBox("是否自动换行").apply {
+    private val cbTextAutoWrap = JCheckBox(getString(R.String.setting_wrap_lines)).apply {
         isSelected = options.textAutoWrap
     }
 
@@ -125,7 +127,7 @@ class OptionsConfigurationPanel {
 
     private val tdTypeOfChange = ToolbarDecorator
         .createDecorator(lTypeOfChange).apply {
-            setAddActionName("添加")
+            setAddActionName(getString(R.String.setting_add))
             setAddAction {
                 TypeOfChangeDialog.actionShow(
                     ProjectManager.getInstance().defaultProject,
@@ -134,11 +136,11 @@ class OptionsConfigurationPanel {
                     }
                 )
             }
-            setRemoveActionName("移除")
+            setRemoveActionName(getString(R.String.setting_remove))
             setRemoveAction {
                 (lTypeOfChange.model as CollectionListModel).remove(lTypeOfChange.selectedIndex)
             }
-            setEditActionName("编辑")
+            setEditActionName(getString(R.String.setting_edit))
             setEditAction {
                 TypeOfChangeDialog.actionShow(
                     ProjectManager.getInstance().defaultProject,
@@ -156,10 +158,10 @@ class OptionsConfigurationPanel {
             add(
                 JPanel(migLayout()).apply {
 
-                    border = IdeBorderFactory.createTitledBorder("通用配置")
+                    border = IdeBorderFactory.createTitledBorder(getString(R.String.setting_general))
 
                     add(
-                        JButton("导入配置").apply {
+                        JButton(getString(R.String.setting_import_config)).apply {
                             val project = guessCurrentProject(this)
                             addActionListener {
                                 FileChooser.chooseFile(
@@ -188,7 +190,7 @@ class OptionsConfigurationPanel {
                         CC().split(2).gapAfter("10")
                     )
                     add(
-                        JButton("导出配置").apply {
+                        JButton(getString(R.String.setting_export_config)).apply {
                             addActionListener {
                                 // TODO
                             }
@@ -196,7 +198,7 @@ class OptionsConfigurationPanel {
                         CC().split(2).gapAfter("10")
                     )
                     add(
-                        JButton("重置").apply {
+                        JButton(getString(R.String.setting_reset)).apply {
                             addActionListener {
                                 cbUseJsonConfig.isSelected = DEFAULT_USE_JSON_CONFIG
                                 tfConfigPath.text = DEFAULT_JSON_CONFIG_PATH
@@ -224,21 +226,27 @@ class OptionsConfigurationPanel {
                         TextFieldWithBrowseButton(tfConfigPath) {
                             val project = guessCurrentProject(cbUseJsonConfig)
                             val selectedFile = LocalFileSystem.getInstance()
-                                .findFileByPath(tfConfigPath.text.replace(PROJECT_PATH_PLACEHOLDER, project.basePath.orEmpty()))
+                                .findFileByPath(
+                                    tfConfigPath.text.replace(
+                                        PROJECT_PATH_PLACEHOLDER,
+                                        project.basePath.orEmpty()
+                                    )
+                                )
                                 ?: project.guessProjectDir()
                             FileChooser.chooseFile(
                                 FileChooserDescriptorFactory.createSingleFileDescriptor("json"),
                                 project,
                                 selectedFile
                             ) { vFile ->
-                                tfConfigPath.text = vFile.path.replace(project.basePath.orEmpty(), PROJECT_PATH_PLACEHOLDER)
+                                tfConfigPath.text =
+                                    vFile.path.replace(project.basePath.orEmpty(), PROJECT_PATH_PLACEHOLDER)
                             }
                         },
                         wrap()
                     )
 
                     add(cbTextAutoWrap, CC().gapAfter("20").split())
-                    add(JLabel("单行最大长度"), CC().gapAfter("5"))
+                    add(JLabel(getString(R.String.setting_maximum_length_of_single_lines)), CC().gapAfter("5"))
                     add(tfAutoWrapLength)
                     add(JPanel(), fillX().wrap())
                 },
@@ -247,27 +255,27 @@ class OptionsConfigurationPanel {
 
             add(
                 JPanel(migLayout()).apply {
-                    border = IdeBorderFactory.createTitledBorder("输出关键字")
+                    border = IdeBorderFactory.createTitledBorder(getString(R.String.setting_keywords))
 
-                    add(JLabel("影响范围-左"), CC().gapAfter("5").split())
+                    add(JLabel(getString(R.String.setting_scope_wrapper_start)), CC().gapAfter("5").split())
                     add(tfScopeWrapperStart, CC().gapAfter("20").minWidth("30"))
-                    add(JLabel("影响范围-右"), CC().gapAfter("5"))
+                    add(JLabel(getString(R.String.setting_scope_wrapper_end)), CC().gapAfter("5"))
                     add(tfScopeWrapperEnd, CC().minWidth("30").gapAfter("20"))
-                    add(JLabel("简单说明分隔"), CC().gapAfter("5"))
+                    add(JLabel(getString(R.String.setting_description_separator)), CC().gapAfter("5"))
                     add(tfDescriptionSeparator, CC().minWidth("30"))
                     add(JPanel(), fillX().wrap())
 
-                    add(JLabel("重大改变关键字"), CC().gapAfter("5").split())
+                    add(JLabel(getString(R.String.setting_breaking_changes_key)), CC().gapAfter("5").split())
                     add(tfBreakingChanges, CC().gapAfter("20").minWidth("30"))
-                    add(JLabel("重大改变为空时"), CC().gapAfter("5"))
+                    add(JLabel(getString(R.String.setting_breaking_changes_when_empty)), CC().gapAfter("5"))
                     add(tfBreakingChangesWhenEmpty, CC().gapAfter("20").minWidth("30"))
                     add(JPanel(), fillX().wrap())
 
-                    add(JLabel("本次解决的问题"), CC().gapAfter("5").split())
+                    add(JLabel(getString(R.String.setting_closed_issues_key)), CC().gapAfter("5").split())
                     add(tfClosedIssues, CC().gapAfter("20").minWidth("30"))
-                    add(JLabel("解决的问题分隔"), CC().gapAfter("5"))
+                    add(JLabel(getString(R.String.setting_closed_issues_separator)), CC().gapAfter("5"))
                     add(tfClosedIssuesSeparator, CC().gapAfter("20").minWidth("30"))
-                    add(JLabel("解决的问题为空时"), CC().gapAfter("5"))
+                    add(JLabel(getString(R.String.setting_closed_issues_when_empty)), CC().gapAfter("5"))
                     add(tfClosedIssuesWhenEmpty, CC().gapAfter("20").minWidth("30"))
                     add(JPanel(), fillX().wrap())
                 },
@@ -276,7 +284,7 @@ class OptionsConfigurationPanel {
 
             add(
                 JPanel(migLayout()).apply {
-                    border = IdeBorderFactory.createTitledBorder("修改类型")
+                    border = IdeBorderFactory.createTitledBorder(getString(R.String.setting_type_of_change))
 
                     add(tdTypeOfChange.createPanel(), fillX())
                 },

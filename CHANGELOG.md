@@ -2,15 +2,16 @@
 
 # VcsHelper Changelog
 
-## 1.0.0
+## 1.0.2
 ### Added
-- Custom template `commit_template.json` enabled.
+- Add Settings Panel.
+- Internationalization completed.
 
 ## 1.0.1
 ### Fixed
 - Opening the project in the current window will cause configuration confusion.
 - Global font causes IDEA default font to be modified.
 
-## 1.0.2
+## 1.0.0
 ### Added
-- Add Settings Panel.
+- Custom template `commit_template.json` enabled.
