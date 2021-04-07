@@ -2,8 +2,6 @@ package cn.wj.plugin.vcs.extensions.configurable
 
 import cn.wj.plugin.vcs.R
 import cn.wj.plugin.vcs.bundle.getString
-import cn.wj.plugin.vcs.entity.ChangeTypeEntity
-import cn.wj.plugin.vcs.tools.ConfigHelper
 import cn.wj.plugin.vcs.constants.DEFAULT_AUTO_WRAP_LENGTH
 import cn.wj.plugin.vcs.constants.DEFAULT_BREAKING_CHANGES
 import cn.wj.plugin.vcs.constants.DEFAULT_BREAKING_CHANGES_WHEN_EMPTY
@@ -19,7 +17,9 @@ import cn.wj.plugin.vcs.constants.DEFAULT_TYPE_OF_CHANGE_LIST
 import cn.wj.plugin.vcs.constants.DEFAULT_USE_JSON_CONFIG
 import cn.wj.plugin.vcs.constants.PROJECT_PATH_PLACEHOLDER
 import cn.wj.plugin.vcs.dialog.TypeOfChangeDialog
+import cn.wj.plugin.vcs.entity.ChangeTypeEntity
 import cn.wj.plugin.vcs.storage.Options
+import cn.wj.plugin.vcs.tools.ConfigHelper
 import cn.wj.plugin.vcs.tools.toJsonString
 import cn.wj.plugin.vcs.tools.toTypeEntity
 import cn.wj.plugin.vcs.ui.fillX

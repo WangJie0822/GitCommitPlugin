@@ -1,8 +1,5 @@
 package cn.wj.plugin.vcs.storage
 
-import cn.wj.plugin.vcs.entity.ChangeTypeEntity
-import cn.wj.plugin.vcs.entity.KeywordsEntity
-import cn.wj.plugin.vcs.entity.PanelInfoEntity
 import cn.wj.plugin.vcs.constants.DEFAULT_AUTO_WRAP_LENGTH
 import cn.wj.plugin.vcs.constants.DEFAULT_AUTO_WRAP_LENGTH_INT
 import cn.wj.plugin.vcs.constants.DEFAULT_BREAKING_CHANGES
@@ -17,6 +14,9 @@ import cn.wj.plugin.vcs.constants.DEFAULT_SCOPE_WRAPPER_START
 import cn.wj.plugin.vcs.constants.DEFAULT_TEXT_AUTO_WRAP
 import cn.wj.plugin.vcs.constants.DEFAULT_TYPE_OF_CHANGE_LIST
 import cn.wj.plugin.vcs.constants.DEFAULT_USE_JSON_CONFIG
+import cn.wj.plugin.vcs.entity.ChangeTypeEntity
+import cn.wj.plugin.vcs.entity.KeywordsEntity
+import cn.wj.plugin.vcs.entity.PanelInfoEntity
 import cn.wj.plugin.vcs.tools.toTypeEntity
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager

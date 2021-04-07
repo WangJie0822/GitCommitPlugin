@@ -2,10 +2,10 @@ package cn.wj.plugin.vcs.dialog
 
 import cn.wj.plugin.vcs.R
 import cn.wj.plugin.vcs.bundle.getString
-import cn.wj.plugin.vcs.tools.GitLogQuery
 import cn.wj.plugin.vcs.entity.ChangeTypeEntity
 import cn.wj.plugin.vcs.entity.CommitMessageEntity
 import cn.wj.plugin.vcs.tools.ConfigHelper
+import cn.wj.plugin.vcs.tools.GitLogQuery
 import cn.wj.plugin.vcs.ui.fillX
 import cn.wj.plugin.vcs.ui.migLayout
 import cn.wj.plugin.vcs.ui.migLayoutVertical

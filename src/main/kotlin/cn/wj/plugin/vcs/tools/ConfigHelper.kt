@@ -1,7 +1,7 @@
 package cn.wj.plugin.vcs.tools
 
-import cn.wj.plugin.vcs.entity.PanelInfoEntity
 import cn.wj.plugin.vcs.constants.PROJECT_PATH_PLACEHOLDER
+import cn.wj.plugin.vcs.entity.PanelInfoEntity
 import cn.wj.plugin.vcs.storage.Options
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile

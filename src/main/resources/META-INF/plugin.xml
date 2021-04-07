@@ -9,9 +9,6 @@
     <depends>com.intellij.modules.vcs</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <checkoutCompletedListener implementation="cn.wj.plugin.vcs.extensions.listener.VcsUpdateCompleteListener"
-                                   id="Wj.Vcs.VcsUpdateCompleteListener"/>
-
         <applicationConfigurable groupId="tools"
                                  instance="cn.wj.plugin.vcs.extensions.configurable.OptionsConfigurable"/>
         <applicationService serviceImplementation="cn.wj.plugin.vcs.storage.Options"/>
