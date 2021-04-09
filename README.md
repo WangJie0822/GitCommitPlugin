@@ -1,4 +1,4 @@
-# GitCommitPlugin
+# VcsHelperPlugin
 
 ![Build](https://github.com/WangJie0822/VcsHelperPlugin/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/cn.wj.plugin.vcs.svg)](https://plugins.jetbrains.com/plugin/cn.wj.plugin.vcs)
