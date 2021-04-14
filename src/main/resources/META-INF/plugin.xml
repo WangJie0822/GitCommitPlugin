@@ -18,8 +18,16 @@
         <action id="Wj.Vcs.CommitTemplate" class="cn.wj.plugin.vcs.action.CreateCommitAction"
                 text="Create Commit Message"
                 description="Create commit message by template"
-                icon="/icons/load.png">
+                icon="/icons/load.svg">
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
+        </action>
+        <action id="Wj.Vcs.ShowCreateTemplateAction" class="cn.wj.plugin.vcs.action.ShowCreateTemplateAction"
+                icon="/icons/commit.svg"
+                text="Show Create Template Dialog" description="Show create template dialog">
+            <add-to-group group-id="NavBarVcsGroup" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt k"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="option k"/>
+            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="option k" replace-all="true"/>
         </action>
     </actions>
 

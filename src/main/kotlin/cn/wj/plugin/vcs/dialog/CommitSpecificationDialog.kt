@@ -2,13 +2,16 @@ package cn.wj.plugin.vcs.dialog
 
 import cn.wj.plugin.vcs.R
 import cn.wj.plugin.vcs.bundle.getString
+import cn.wj.plugin.vcs.constants.STORAGE_KEY_COMMIT_MESSAGE
 import cn.wj.plugin.vcs.entity.ChangeTypeEntity
 import cn.wj.plugin.vcs.entity.CommitMessageEntity
 import cn.wj.plugin.vcs.tools.ConfigHelper
 import cn.wj.plugin.vcs.tools.GitLogQuery
+import cn.wj.plugin.vcs.tools.toJsonString
 import cn.wj.plugin.vcs.ui.fillX
 import cn.wj.plugin.vcs.ui.migLayout
 import cn.wj.plugin.vcs.ui.migLayoutVertical
+import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
@@ -28,7 +31,7 @@ import javax.swing.JTextField
  *
  * > [王杰](mailto:w15555650921@gmail.com) 创建于 20201/3/19
  */
-class CommitSpecificationDialog(project: Project?, message: CommitMessageEntity?) :
+class CommitSpecificationDialog(private val project: Project?, message: CommitMessageEntity?) :
     DialogWrapper(project) {
 
     private val panel = CommitSpecificationPanel(project, message)
@@ -41,6 +44,14 @@ class CommitSpecificationDialog(project: Project?, message: CommitMessageEntity?
 
     override fun createCenterPanel(): JComponent {
         return panel.createCenterPanel()
+    }
+
+    override fun doOKAction() {
+        super.doOKAction()
+        if (null != project) {
+            PropertiesComponent.getInstance(project)
+                .setValue(STORAGE_KEY_COMMIT_MESSAGE, getMessageEntity().toJsonString())
+        }
     }
 
     fun getMessageEntity(): CommitMessageEntity {

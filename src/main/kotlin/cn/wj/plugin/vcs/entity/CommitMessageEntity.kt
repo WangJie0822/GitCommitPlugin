@@ -2,6 +2,7 @@ package cn.wj.plugin.vcs.entity
 
 import cn.wj.plugin.vcs.tools.ConfigHelper
 import com.intellij.openapi.project.Project
+import kotlinx.serialization.Serializable
 import org.apache.commons.lang.StringUtils
 import org.apache.commons.lang.WordUtils
 
@@ -15,6 +16,7 @@ import org.apache.commons.lang.WordUtils
  * @param breakingChanges 重大修改
  * @param closedIssues 关闭的问题
  */
+@Serializable
 data class CommitMessageEntity(
     var typeOfChange: ChangeTypeEntity = ChangeTypeEntity("", "", ""),
     var scopeOfChange: String = "",
@@ -40,8 +42,8 @@ data class CommitMessageEntity(
 
             // 详细描述
             if (longDescription.isNotBlank()) {
-                appendln()
-                appendln()
+                appendLine()
+                appendLine()
                 append(
                     if (keywords.wrapWords) {
                         WordUtils.wrap(longDescription, keywords.maxLineLength)
@@ -53,8 +55,8 @@ data class CommitMessageEntity(
 
             // 重大改变
             if (breakingChanges.isNotBlank()) {
-                appendln()
-                appendln()
+                appendLine()
+                appendLine()
                 append(
                     if (keywords.wrapWords) {
                         WordUtils.wrap("${keywords.breakingChanges}$breakingChanges", keywords.maxLineLength)
@@ -64,23 +66,23 @@ data class CommitMessageEntity(
                 )
             } else {
                 if (keywords.breakingChangesEmpty.isNotBlank()) {
-                    appendln()
-                    appendln()
+                    appendLine()
+                    appendLine()
                     append("${keywords.breakingChanges}${keywords.breakingChangesEmpty}")
                 }
             }
 
             // 关闭的问题
             if (closedIssues.isNotBlank()) {
-                appendln()
+                appendLine()
                 for (closedIssue in closedIssues.split(keywords.closedIssuesSeparator)) {
-                    appendln()
+                    appendLine()
                     append("${keywords.closedIssues}${formatClosedIssue(closedIssue)}")
                 }
             } else {
                 if (keywords.closedIssuesEmpty.isNotBlank()) {
-                    appendln()
-                    appendln()
+                    appendLine()
+                    appendLine()
                     append("${keywords.closedIssues}${keywords.closedIssuesEmpty}")
                 }
             }
@@ -109,6 +111,7 @@ data class CommitMessageEntity(
 
             val line1 = strings[0]
             if (!line1.contains(keywords.descriptionSeparator)) {
+                result.shortDescription = message
                 return result
             }
 
@@ -147,7 +150,7 @@ data class CommitMessageEntity(
                 ) {
                     break
                 }
-                sb.append(lineString).appendln()
+                sb.append(lineString).appendLine()
                 pos++
             }
             result.longDescription = sb.toString().trim { it <= ' ' }
@@ -159,7 +162,7 @@ data class CommitMessageEntity(
                 if (lineString.startsWith(keywords.closedIssues)) {
                     break
                 }
-                sb.append(lineString).appendln()
+                sb.append(lineString).appendLine()
                 pos++
             }
             val breakingChanges = sb.toString().trim { it <= ' ' }.replace(keywords.breakingChanges, "")

@@ -3,6 +3,9 @@ package cn.wj.plugin.vcs.constants
 import cn.wj.plugin.vcs.entity.ChangeTypeEntity
 import cn.wj.plugin.vcs.tools.toJsonString
 
+/** 缓存数据 key - 提交消息 */
+const val STORAGE_KEY_COMMIT_MESSAGE = "storage_key_commit_message"
+
 /** 默认提交模板配置文件名 */
 const val DEFAULT_CONFIG_FILE_NAME = "commit_template.json"
 
