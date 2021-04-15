@@ -2,6 +2,10 @@
 
 # VcsHelper Changelog
 
+## 1.0.3
+### Added
+- Add the action of creating a message and then submitting it.
+
 ## 1.0.2
 ### Added
 - Add Settings Panel.

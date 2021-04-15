@@ -25,9 +25,7 @@
                 icon="/icons/commit.svg"
                 text="Show Create Template Dialog" description="Show create template dialog">
             <add-to-group group-id="NavBarVcsGroup" anchor="first"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="alt k"/>
-            <keyboard-shortcut keymap="Mac OS X" first-keystroke="option k"/>
-            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="option k" replace-all="true"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt K"/>
         </action>
     </actions>
 

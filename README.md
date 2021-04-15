@@ -6,6 +6,15 @@
 
 <!-- Plugin description -->
 
+<p>
+<b>
+<a href="https://github.com/WangJie0822/VcsHelperPlugin">GitHub</a> |
+<a href="https://github.com/WangJie0822/VcsHelperPlugin/issues">Issues</a> |
+<a href="mailto:w15555650921@gmail.com">Gmail</a> |
+<a href="mailto:15555650921@163.com">163</a>
+</b>
+</p>
+
 This plugin allows to create a commit message with the following template:
 
 ```
@@ -15,6 +24,10 @@ This plugin allows to create a commit message with the following template:
 <BLANK LINE>
 <footer>
 ```
+
+You can try the `Create Commit Message` button ![](https://raw.githubusercontent.com/WangJie0822/VcsHelperPlugin/develop/src/main/resources/icons/load.svg) in the Commit popup before `Commit Message History` or try the
+`Show Create Template Dialog` button ![](https://raw.githubusercontent.com/WangJie0822/VcsHelperPlugin/develop/src/main/resources/icons/commit.svg) in the MainToolbar to use this feature.
+
 You can also customize your own build rules through <kbd>Settings/Preferences</kbd> > <kbd>Tools</kbd> > <kbd>VcsHelper</kbd>
 
 Or add the `*.json` configuration file like this:
