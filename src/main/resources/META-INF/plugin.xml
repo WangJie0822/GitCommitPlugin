@@ -24,9 +24,16 @@
         <action id="Wj.Vcs.ShowCreateTemplateAction" class="cn.wj.plugin.vcs.action.ShowCreateTemplateAction"
                 icon="/icons/commit.svg"
                 text="Show Create Template Dialog" description="Show create template dialog">
-            <add-to-group group-id="NavBarVcsGroup" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt K"/>
         </action>
+        <group id="Wj.Vcs.VscToolbar" text="Vcs Toolbar Actions">
+            <separator/>
+            <reference ref="Wj.Vcs.ShowCreateTemplateAction"/>
+            <separator/>
+
+            <add-to-group group-id="MainToolBarSettings" anchor="first"/>
+            <add-to-group group-id="NavBarVcsGroup" anchor="first"/>
+        </group>
     </actions>
 
 </idea-plugin>
