@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>cn.wj.plugin.vcs</id>
     <name>VcsHelper</name>
-    <vendor>w15555650921@gmail.com</vendor>
+    <vendor email="15555650921@163.com" url="https://github.com/WangJie0822/VcsHelperPlugin">WangJie0822</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
