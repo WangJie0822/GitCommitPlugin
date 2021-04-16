@@ -25,6 +25,9 @@ const val DEFAULT_TEXT_AUTO_WRAP = true
 const val DEFAULT_AUTO_WRAP_LENGTH = "70"
 val DEFAULT_AUTO_WRAP_LENGTH_INT = DEFAULT_AUTO_WRAP_LENGTH.toInt()
 
+/** 默认字体 */
+const val DEFAULT_FONT_NAME = ""
+
 /** 影响范围包裹符号左 */
 const val DEFAULT_SCOPE_WRAPPER_START = "("
 

@@ -8,6 +8,7 @@ import cn.wj.plugin.vcs.constants.DEFAULT_CLOSED_ISSUES
 import cn.wj.plugin.vcs.constants.DEFAULT_CLOSED_ISSUES_SEPARATOR
 import cn.wj.plugin.vcs.constants.DEFAULT_CLOSED_ISSUES_WHEN_EMPTY
 import cn.wj.plugin.vcs.constants.DEFAULT_DESCRIPTION_SEPARATOR
+import cn.wj.plugin.vcs.constants.DEFAULT_FONT_NAME
 import cn.wj.plugin.vcs.constants.DEFAULT_JSON_CONFIG_PATH
 import cn.wj.plugin.vcs.constants.DEFAULT_SCOPE_WRAPPER_END
 import cn.wj.plugin.vcs.constants.DEFAULT_SCOPE_WRAPPER_START
@@ -44,6 +45,9 @@ class Options : PersistentStateComponent<Options> {
 
     /** 单行长度 */
     var autoWrapLength = DEFAULT_AUTO_WRAP_LENGTH
+
+    /** 输入框字体名 */
+    var inputTextFontName = DEFAULT_FONT_NAME
 
     /** 影响范围包裹符号左 */
     var scopeWrapperStart = DEFAULT_SCOPE_WRAPPER_START

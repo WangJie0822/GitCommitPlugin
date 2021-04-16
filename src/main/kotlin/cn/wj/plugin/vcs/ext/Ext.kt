@@ -2,6 +2,7 @@ package cn.wj.plugin.vcs.ext
 
 import cn.wj.plugin.vcs.constants.STORAGE_KEY_COMMIT_MESSAGE
 import cn.wj.plugin.vcs.entity.CommitMessageEntity
+import cn.wj.plugin.vcs.storage.Options
 import cn.wj.plugin.vcs.tools.toTypeEntity
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -11,6 +12,13 @@ import com.intellij.openapi.vcs.VcsDataKeys
 import com.intellij.openapi.vcs.changes.LocalChangeList
 import com.intellij.openapi.vcs.changes.ui.CommitMessageProvider
 import com.intellij.openapi.vcs.ui.Refreshable
+import com.intellij.util.ui.JBFont
+import com.intellij.util.ui.JBUI
+import com.intellij.util.ui.UIUtil
+import java.awt.Component
+import java.awt.Container
+import java.awt.Font
+import javax.swing.JComponent
 
 fun AnActionEvent.getCommitMessageI(): CommitMessageI? {
     val data = Refreshable.PANEL_KEY.getData(dataContext)
@@ -55,4 +63,34 @@ fun AnActionEvent.getCommitMessageFor(changeList: LocalChangeList): String? {
     if (!changeListDescription.isNullOrBlank()) return changeListDescription
 
     return if (!changeList.hasDefaultName()) changeList.name else null
+}
+
+fun getDefaultFont(): Font {
+    return JBFont.create(UIUtil.getLabelFont(UIUtil.FontSize.NORMAL))
+}
+
+fun JComponent.previewFont(primary: String?) {
+    val defaultFont = getDefaultFont()
+    font =
+        if (primary.isNullOrBlank()) {
+            defaultFont
+        } else {
+            JBUI.Fonts.create(
+                primary,
+                defaultFont.size
+            )
+        }
+}
+
+fun <T : Component> T.fixFont(): T {
+    val defaultFont = getDefaultFont()
+    val fontName = Options.instance.inputTextFontName.ifBlank {
+        defaultFont.fontName
+    }
+    font = JBUI.Fonts.create(fontName, defaultFont.size)
+    return this
+}
+
+fun Container.addWithFont(comp: Component, constraints: Any? = null) {
+    add(comp.fixFont(), constraints)
 }

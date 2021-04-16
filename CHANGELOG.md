@@ -5,6 +5,7 @@
 ## 1.0.3
 ### Added
 - Add the action of creating a message and then submitting it.
+- Added panel font settings to solve the problem of Chinese garbled.
 
 ## 1.0.2
 ### Added

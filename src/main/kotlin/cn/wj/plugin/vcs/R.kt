@@ -38,6 +38,7 @@ object R {
         const val setting_create_title = "setting.createTitle"
         const val setting_create_action = "setting.createAction"
         const val setting_create_description = "setting.createDescription"
+        const val setting_input_text_font_with_colon = "setting.inputTextFontWithColon"
 
         const val commit_dialog_title = "commit.dialogTitle"
         const val commit_type_of_change = "commit.typeOfChange"

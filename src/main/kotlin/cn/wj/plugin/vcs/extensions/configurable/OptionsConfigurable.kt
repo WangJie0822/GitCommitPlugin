@@ -18,6 +18,8 @@ import cn.wj.plugin.vcs.constants.DEFAULT_USE_JSON_CONFIG
 import cn.wj.plugin.vcs.constants.PROJECT_PATH_PLACEHOLDER
 import cn.wj.plugin.vcs.dialog.TypeOfChangeDialog
 import cn.wj.plugin.vcs.entity.ChangeTypeEntity
+import cn.wj.plugin.vcs.ext.addWithFont
+import cn.wj.plugin.vcs.ext.previewFont
 import cn.wj.plugin.vcs.storage.Options
 import cn.wj.plugin.vcs.tools.ConfigHelper
 import cn.wj.plugin.vcs.tools.toJsonString
@@ -37,15 +39,20 @@ import com.intellij.openapi.project.guessProjectDir
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.ui.CollectionListModel
+import com.intellij.ui.FontComboBox
 import com.intellij.ui.IdeBorderFactory
 import com.intellij.ui.ToolbarDecorator
 import com.intellij.ui.components.JBList
+import com.intellij.util.ui.JBFont
+import com.intellij.util.ui.UIUtil
 import net.miginfocom.layout.CC
+import java.awt.event.ItemEvent
 import javax.swing.JButton
 import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
+import javax.swing.JTextArea
 import javax.swing.JTextField
 import javax.swing.ListSelectionModel
 
@@ -94,38 +101,70 @@ class OptionsConfigurablePanel {
     /** 选项配置 */
     private val options = Options.instance
 
+    /** 是否使用文件配置 */
     private val cbUseJsonConfig = JCheckBox(getString(R.String.setting_use_file_config)).apply {
         isSelected = options.useJsonConfig
     }
 
+    /** 文件路径 */
     private val tfConfigPath = JTextField(options.jsonConfigPath)
 
+    /** 是否自动换行 */
     private val cbTextAutoWrap = JCheckBox(getString(R.String.setting_wrap_lines)).apply {
         isSelected = options.textAutoWrap
     }
 
+    /** 单行最大长度 */
     private val tfAutoWrapLength = JTextField(options.autoWrapLength)
 
+    /** 输入字体选择 */
+    private val fcbFont = FontComboBox(false, false, false).apply {
+        fontName = if (options.inputTextFontName.isBlank()) {
+            JBFont.create(UIUtil.getLabelFont(UIUtil.FontSize.NORMAL)).fontName
+        } else {
+            options.inputTextFontName
+        }
+        addItemListener {
+            if (it.stateChange == ItemEvent.SELECTED) {
+                this.previewFont(fontName)
+                taPreview.previewFont(fontName)
+            }
+        }
+    }
+
+    /** 字体预览 */
+    private val taPreview = JTextArea("海内存知己\n天涯若比邻！\nABCDabcd\n1234!@#$")
+
+    /** 影响范围包裹 */
     private val tfScopeWrapperStart = JTextField(options.scopeWrapperStart)
 
+    /** 影响范围包裹 */
     private val tfScopeWrapperEnd = JTextField(options.scopeWrapperEnd)
 
+    /** 简单描述分隔 */
     private val tfDescriptionSeparator = JTextField(options.descriptionSeparator)
 
+    /** 重大改变关键字 */
     private val tfBreakingChanges = JTextField(options.breakingChanges)
 
+    /** 重大改变为空显示 */
     private val tfBreakingChangesWhenEmpty = JTextField(options.breakingChangesWhenEmpty)
 
+    /** 关闭的问题关键字 */
     private val tfClosedIssues = JTextField(options.closedIssues)
 
+    /** 关闭的问题分隔 */
     private val tfClosedIssuesSeparator = JTextField(options.closedIssuesSeparator)
 
+    /** 关闭的问题为空显示 */
     private val tfClosedIssuesWhenEmpty = JTextField(options.closedIssuesWhenEmpty)
 
+    /** 修改类型列表 */
     private val lTypeOfChange = JBList(CollectionListModel(options.getTypeOfChangeList())).apply {
         selectionMode = ListSelectionModel.SINGLE_SELECTION
     }
 
+    /** 修改类型列表 */
     private val tdTypeOfChange = ToolbarDecorator
         .createDecorator(lTypeOfChange).apply {
             setAddActionName(getString(R.String.setting_add))
@@ -153,15 +192,18 @@ class OptionsConfigurablePanel {
             }
         }
 
+    /** 创建设置面板显示 */
     fun createCenterPanel(): JComponent {
         return JPanel(migLayoutVertical()).apply {
 
-            add(
+            // 通用设置
+            addWithFont(
                 JPanel(migLayout()).apply {
 
                     border = IdeBorderFactory.createTitledBorder(getString(R.String.setting_general))
 
-                    add(
+                    // 导入配置
+                    addWithFont(
                         JButton(getString(R.String.setting_import_config)).apply {
                             val project = guessCurrentProject(this)
                             addActionListener {
@@ -190,7 +232,8 @@ class OptionsConfigurablePanel {
                         },
                         CC().split(2).gapAfter("10")
                     )
-                    add(
+                    // 导出配置
+                    addWithFont(
                         JButton(getString(R.String.setting_export_config)).apply {
                             addActionListener {
                                 // TODO
@@ -198,7 +241,8 @@ class OptionsConfigurablePanel {
                         },
                         CC().split(2).gapAfter("10")
                     )
-                    add(
+                    // 重置
+                    addWithFont(
                         JButton(getString(R.String.setting_reset)).apply {
                             addActionListener {
                                 cbUseJsonConfig.isSelected = DEFAULT_USE_JSON_CONFIG
@@ -222,8 +266,10 @@ class OptionsConfigurablePanel {
                         wrap()
                     )
 
-                    add(cbUseJsonConfig, CC().gapAfter("20").split())
-                    add(
+                    // 是否使用文件配置
+                    addWithFont(cbUseJsonConfig, CC().gapAfter("20").split())
+                    // 文件选择器
+                    addWithFont(
                         TextFieldWithBrowseButton(tfConfigPath) {
                             val project = guessCurrentProject(cbUseJsonConfig)
                             val selectedFile = LocalFileSystem.getInstance()
@@ -246,56 +292,64 @@ class OptionsConfigurablePanel {
                         wrap()
                     )
 
-                    add(cbTextAutoWrap, CC().gapAfter("20").split())
-                    add(JLabel(getString(R.String.setting_maximum_length_of_single_lines)), CC().gapAfter("5"))
-                    add(tfAutoWrapLength)
-                    add(JPanel(), fillX().wrap())
+                    // 是否自动换行
+                    addWithFont(cbTextAutoWrap, CC().gapAfter("20").split())
+                    // 单行最大长度
+                    addWithFont(JLabel(getString(R.String.setting_maximum_length_of_single_lines)), CC().gapAfter("5"))
+                    addWithFont(tfAutoWrapLength, wrap())
+                    // 字体选择器
+                    addWithFont(JLabel(getString(R.String.setting_input_text_font_with_colon)), CC().split())
+                    addWithFont(fcbFont, wrap().gapBefore("5"))
+                    addWithFont(taPreview, wrap().split().minWidth("200"))
+                    // 字体预览
+                    addWithFont(JPanel(), fillX().wrap())
                 },
                 fillX()
             )
 
-            add(
+            addWithFont(
                 JPanel(migLayout()).apply {
                     border = IdeBorderFactory.createTitledBorder(getString(R.String.setting_keywords))
 
-                    add(JLabel(getString(R.String.setting_scope_wrapper_start)), CC().gapAfter("5").split())
-                    add(tfScopeWrapperStart, CC().gapAfter("20").minWidth("30"))
-                    add(JLabel(getString(R.String.setting_scope_wrapper_end)), CC().gapAfter("5"))
-                    add(tfScopeWrapperEnd, CC().minWidth("30").gapAfter("20"))
-                    add(JLabel(getString(R.String.setting_description_separator)), CC().gapAfter("5"))
-                    add(tfDescriptionSeparator, CC().minWidth("30"))
-                    add(JPanel(), fillX().wrap())
+                    addWithFont(JLabel(getString(R.String.setting_scope_wrapper_start)), CC().gapAfter("5").split())
+                    addWithFont(tfScopeWrapperStart, CC().gapAfter("20").minWidth("30"))
+                    addWithFont(JLabel(getString(R.String.setting_scope_wrapper_end)), CC().gapAfter("5"))
+                    addWithFont(tfScopeWrapperEnd, CC().minWidth("30").gapAfter("20"))
+                    addWithFont(JLabel(getString(R.String.setting_description_separator)), CC().gapAfter("5"))
+                    addWithFont(tfDescriptionSeparator, CC().minWidth("30"))
+                    addWithFont(JPanel(), fillX().wrap())
 
-                    add(JLabel(getString(R.String.setting_breaking_changes_key)), CC().gapAfter("5").split())
-                    add(tfBreakingChanges, CC().gapAfter("20").minWidth("30"))
-                    add(JLabel(getString(R.String.setting_breaking_changes_when_empty)), CC().gapAfter("5"))
-                    add(tfBreakingChangesWhenEmpty, CC().gapAfter("20").minWidth("30"))
-                    add(JPanel(), fillX().wrap())
+                    addWithFont(JLabel(getString(R.String.setting_breaking_changes_key)), CC().gapAfter("5").split())
+                    addWithFont(tfBreakingChanges, CC().gapAfter("20").minWidth("30"))
+                    addWithFont(JLabel(getString(R.String.setting_breaking_changes_when_empty)), CC().gapAfter("5"))
+                    addWithFont(tfBreakingChangesWhenEmpty, CC().gapAfter("20").minWidth("30"))
+                    addWithFont(JPanel(), fillX().wrap())
 
-                    add(JLabel(getString(R.String.setting_closed_issues_key)), CC().gapAfter("5").split())
-                    add(tfClosedIssues, CC().gapAfter("20").minWidth("30"))
-                    add(JLabel(getString(R.String.setting_closed_issues_separator)), CC().gapAfter("5"))
-                    add(tfClosedIssuesSeparator, CC().gapAfter("20").minWidth("30"))
-                    add(JLabel(getString(R.String.setting_closed_issues_when_empty)), CC().gapAfter("5"))
-                    add(tfClosedIssuesWhenEmpty, CC().gapAfter("20").minWidth("30"))
-                    add(JPanel(), fillX().wrap())
+                    addWithFont(JLabel(getString(R.String.setting_closed_issues_key)), CC().gapAfter("5").split())
+                    addWithFont(tfClosedIssues, CC().gapAfter("20").minWidth("30"))
+                    addWithFont(JLabel(getString(R.String.setting_closed_issues_separator)), CC().gapAfter("5"))
+                    addWithFont(tfClosedIssuesSeparator, CC().gapAfter("20").minWidth("30"))
+                    addWithFont(JLabel(getString(R.String.setting_closed_issues_when_empty)), CC().gapAfter("5"))
+                    addWithFont(tfClosedIssuesWhenEmpty, CC().gapAfter("20").minWidth("30"))
+                    addWithFont(JPanel(), fillX().wrap())
                 },
                 fillX()
             )
 
-            add(
+            addWithFont(
                 JPanel(migLayout()).apply {
                     border = IdeBorderFactory.createTitledBorder(getString(R.String.setting_type_of_change))
 
-                    add(tdTypeOfChange.createPanel(), fillX())
+                    addWithFont(tdTypeOfChange.createPanel(), fillX())
                 },
                 fillX()
             )
 
-            add(JPanel(), fillY())
+            addWithFont(JPanel(), fillY())
         }
     }
 
+    /** 是否修改 */
     fun isModified(): Boolean {
         return with(options) {
             val list = arrayListOf<ChangeTypeEntity>()
@@ -306,6 +360,7 @@ class OptionsConfigurablePanel {
                 jsonConfigPath != tfConfigPath.text ||
                 textAutoWrap != cbTextAutoWrap.isSelected ||
                 autoWrapLength != tfAutoWrapLength.text ||
+                inputTextFontName != fcbFont.fontName ||
                 scopeWrapperStart != tfScopeWrapperStart.text ||
                 scopeWrapperEnd != tfScopeWrapperEnd.text ||
                 descriptionSeparator != tfDescriptionSeparator.text ||
@@ -318,6 +373,7 @@ class OptionsConfigurablePanel {
         }
     }
 
+    /** 保存修改 */
     fun apply() {
         with(options) {
             val list = arrayListOf<ChangeTypeEntity>()
@@ -328,6 +384,7 @@ class OptionsConfigurablePanel {
             jsonConfigPath = tfConfigPath.text
             textAutoWrap = cbTextAutoWrap.isSelected
             autoWrapLength = tfAutoWrapLength.text
+            inputTextFontName = fcbFont.fontName.orEmpty()
             scopeWrapperStart = tfScopeWrapperStart.text
             scopeWrapperEnd = tfScopeWrapperEnd.text
             descriptionSeparator = tfDescriptionSeparator.text

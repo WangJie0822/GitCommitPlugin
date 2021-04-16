@@ -3,6 +3,7 @@ package cn.wj.plugin.vcs.dialog
 import cn.wj.plugin.vcs.R
 import cn.wj.plugin.vcs.bundle.getString
 import cn.wj.plugin.vcs.entity.ChangeTypeEntity
+import cn.wj.plugin.vcs.ext.addWithFont
 import cn.wj.plugin.vcs.ui.fillX
 import cn.wj.plugin.vcs.ui.migLayout
 import com.intellij.openapi.project.Project
@@ -77,13 +78,13 @@ class TypeOfChangePanel(entity: ChangeTypeEntity?) {
 
     fun createCenterPanel(): JComponent {
         return JPanel(migLayout()).apply {
-            add(JLabel(getString(R.String.setting_create_title)), CC().gapAfter("5").split())
-            add(tfTitle, CC().gapAfter("10").growX().minWidth("100"))
-            add(JLabel(getString(R.String.setting_create_action)), CC().gapAfter("5"))
-            add(tfAction, fillX().minWidth("100").wrap())
+            addWithFont(JLabel(getString(R.String.setting_create_title)), CC().gapAfter("5").split())
+            addWithFont(tfTitle, CC().gapAfter("10").growX().minWidth("100"))
+            addWithFont(JLabel(getString(R.String.setting_create_action)), CC().gapAfter("5"))
+            addWithFont(tfAction, fillX().minWidth("100").wrap())
 
-            add(JLabel(getString(R.String.setting_create_description)), fillX().wrap())
-            add(taDescription, fillX().minHeight("50").wrap())
+            addWithFont(JLabel(getString(R.String.setting_create_description)), fillX().wrap())
+            addWithFont(taDescription, fillX().minHeight("50").wrap())
         }
     }
 
