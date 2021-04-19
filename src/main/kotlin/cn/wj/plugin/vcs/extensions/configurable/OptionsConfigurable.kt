@@ -29,12 +29,13 @@ import cn.wj.plugin.vcs.ui.fillY
 import cn.wj.plugin.vcs.ui.migLayout
 import cn.wj.plugin.vcs.ui.migLayoutVertical
 import cn.wj.plugin.vcs.ui.wrap
+import com.intellij.ide.DataManager
 import com.intellij.openapi.Disposable
+import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.fileChooser.FileChooser
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory
 import com.intellij.openapi.options.SearchableConfigurable
 import com.intellij.openapi.project.ProjectManager
-import com.intellij.openapi.project.guessCurrentProject
 import com.intellij.openapi.project.guessProjectDir
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.vfs.LocalFileSystem
@@ -45,7 +46,6 @@ import com.intellij.ui.ToolbarDecorator
 import com.intellij.ui.components.JBList
 import com.intellij.util.ui.JBFont
 import com.intellij.util.ui.UIUtil
-import net.miginfocom.layout.CC
 import java.awt.event.ItemEvent
 import javax.swing.JButton
 import javax.swing.JCheckBox
@@ -55,6 +55,7 @@ import javax.swing.JPanel
 import javax.swing.JTextArea
 import javax.swing.JTextField
 import javax.swing.ListSelectionModel
+import net.miginfocom.layout.CC
 
 /**
  * 设置选项
@@ -119,10 +120,8 @@ class OptionsConfigurablePanel {
 
     /** 输入字体选择 */
     private val fcbFont = FontComboBox(false, false, false).apply {
-        fontName = if (options.inputTextFontName.isBlank()) {
+        fontName = options.inputTextFontName.ifBlank {
             JBFont.create(UIUtil.getLabelFont(UIUtil.FontSize.NORMAL)).fontName
-        } else {
-            options.inputTextFontName
         }
         addItemListener {
             if (it.stateChange == ItemEvent.SELECTED) {
@@ -205,12 +204,13 @@ class OptionsConfigurablePanel {
                     // 导入配置
                     addWithFont(
                         JButton(getString(R.String.setting_import_config)).apply {
-                            val project = guessCurrentProject(this)
                             addActionListener {
+                                val project =
+                                    CommonDataKeys.PROJECT.getData(DataManager.getInstance().getDataContext(this))
                                 FileChooser.chooseFile(
                                     FileChooserDescriptorFactory.createSingleFileDescriptor("json"),
                                     project,
-                                    project.guessProjectDir()
+                                    project?.guessProjectDir()
                                 ) { vFile ->
                                     val config = ConfigHelper.loadFromJson(vFile)
                                     cbTextAutoWrap.isSelected = config.keywords.wrapWords
@@ -271,22 +271,22 @@ class OptionsConfigurablePanel {
                     // 文件选择器
                     addWithFont(
                         TextFieldWithBrowseButton(tfConfigPath) {
-                            val project = guessCurrentProject(cbUseJsonConfig)
+                            val project =
+                                CommonDataKeys.PROJECT.getData(DataManager.getInstance().getDataContext(tfConfigPath))
                             val selectedFile = LocalFileSystem.getInstance()
                                 .findFileByPath(
                                     tfConfigPath.text.replace(
                                         PROJECT_PATH_PLACEHOLDER,
-                                        project.basePath.orEmpty()
+                                        project?.basePath.orEmpty()
                                     )
-                                )
-                                ?: project.guessProjectDir()
+                                ) ?: project?.guessProjectDir()
                             FileChooser.chooseFile(
                                 FileChooserDescriptorFactory.createSingleFileDescriptor("json"),
                                 project,
                                 selectedFile
                             ) { vFile ->
                                 tfConfigPath.text =
-                                    vFile.path.replace(project.basePath.orEmpty(), PROJECT_PATH_PLACEHOLDER)
+                                    vFile.path.replace(project?.basePath.orEmpty(), PROJECT_PATH_PLACEHOLDER)
                             }
                         },
                         wrap()
@@ -357,19 +357,19 @@ class OptionsConfigurablePanel {
                 list.add(lTypeOfChange.model.getElementAt(i))
             }
             useJsonConfig != cbUseJsonConfig.isSelected ||
-                jsonConfigPath != tfConfigPath.text ||
-                textAutoWrap != cbTextAutoWrap.isSelected ||
-                autoWrapLength != tfAutoWrapLength.text ||
-                inputTextFontName != fcbFont.fontName ||
-                scopeWrapperStart != tfScopeWrapperStart.text ||
-                scopeWrapperEnd != tfScopeWrapperEnd.text ||
-                descriptionSeparator != tfDescriptionSeparator.text ||
-                breakingChanges != tfBreakingChanges.text ||
-                breakingChangesWhenEmpty != tfBreakingChangesWhenEmpty.text ||
-                closedIssues != tfClosedIssues.text ||
-                closedIssuesSeparator != tfClosedIssuesSeparator.text ||
-                closedIssuesWhenEmpty != tfClosedIssuesWhenEmpty.text ||
-                typeOfChangeList != list.toJsonString()
+                    jsonConfigPath != tfConfigPath.text ||
+                    textAutoWrap != cbTextAutoWrap.isSelected ||
+                    autoWrapLength != tfAutoWrapLength.text ||
+                    inputTextFontName != fcbFont.fontName ||
+                    scopeWrapperStart != tfScopeWrapperStart.text ||
+                    scopeWrapperEnd != tfScopeWrapperEnd.text ||
+                    descriptionSeparator != tfDescriptionSeparator.text ||
+                    breakingChanges != tfBreakingChanges.text ||
+                    breakingChangesWhenEmpty != tfBreakingChangesWhenEmpty.text ||
+                    closedIssues != tfClosedIssues.text ||
+                    closedIssuesSeparator != tfClosedIssuesSeparator.text ||
+                    closedIssuesWhenEmpty != tfClosedIssuesWhenEmpty.text ||
+                    typeOfChangeList != list.toJsonString()
         }
     }
 
