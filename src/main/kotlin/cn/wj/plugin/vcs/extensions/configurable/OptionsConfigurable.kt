@@ -46,6 +46,7 @@ import com.intellij.ui.ToolbarDecorator
 import com.intellij.ui.components.JBList
 import com.intellij.util.ui.JBFont
 import com.intellij.util.ui.UIUtil
+import net.miginfocom.layout.CC
 import java.awt.event.ItemEvent
 import javax.swing.JButton
 import javax.swing.JCheckBox
@@ -55,7 +56,6 @@ import javax.swing.JPanel
 import javax.swing.JTextArea
 import javax.swing.JTextField
 import javax.swing.ListSelectionModel
-import net.miginfocom.layout.CC
 
 /**
  * 设置选项
@@ -357,19 +357,19 @@ class OptionsConfigurablePanel {
                 list.add(lTypeOfChange.model.getElementAt(i))
             }
             useJsonConfig != cbUseJsonConfig.isSelected ||
-                    jsonConfigPath != tfConfigPath.text ||
-                    textAutoWrap != cbTextAutoWrap.isSelected ||
-                    autoWrapLength != tfAutoWrapLength.text ||
-                    inputTextFontName != fcbFont.fontName ||
-                    scopeWrapperStart != tfScopeWrapperStart.text ||
-                    scopeWrapperEnd != tfScopeWrapperEnd.text ||
-                    descriptionSeparator != tfDescriptionSeparator.text ||
-                    breakingChanges != tfBreakingChanges.text ||
-                    breakingChangesWhenEmpty != tfBreakingChangesWhenEmpty.text ||
-                    closedIssues != tfClosedIssues.text ||
-                    closedIssuesSeparator != tfClosedIssuesSeparator.text ||
-                    closedIssuesWhenEmpty != tfClosedIssuesWhenEmpty.text ||
-                    typeOfChangeList != list.toJsonString()
+                jsonConfigPath != tfConfigPath.text ||
+                textAutoWrap != cbTextAutoWrap.isSelected ||
+                autoWrapLength != tfAutoWrapLength.text ||
+                inputTextFontName != fcbFont.fontName ||
+                scopeWrapperStart != tfScopeWrapperStart.text ||
+                scopeWrapperEnd != tfScopeWrapperEnd.text ||
+                descriptionSeparator != tfDescriptionSeparator.text ||
+                breakingChanges != tfBreakingChanges.text ||
+                breakingChangesWhenEmpty != tfBreakingChangesWhenEmpty.text ||
+                closedIssues != tfClosedIssues.text ||
+                closedIssuesSeparator != tfClosedIssuesSeparator.text ||
+                closedIssuesWhenEmpty != tfClosedIssuesWhenEmpty.text ||
+                typeOfChangeList != list.toJsonString()
         }
     }
 

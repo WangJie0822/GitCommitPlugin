@@ -12,8 +12,7 @@ import com.intellij.openapi.ui.DialogWrapper
  *
  * > [王杰](mailto:w15555650921@gmail.com) 创建于 20201/3/19
  */
-class CreateCommitAction :
-    DumbAwareAction() {
+class CreateCommitAction : DumbAwareAction() {
 
     init {
         isEnabledInModalContext = true
