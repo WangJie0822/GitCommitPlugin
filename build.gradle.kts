@@ -26,12 +26,13 @@ version = properties("pluginVersion")
 
 // Configure project's dependencies
 repositories {
+    maven { setUrl("https://maven.aliyun.com/nexus/content/groups/public/") }
+    maven { setUrl("https://maven.aliyun.com/nexus/content/repositories/jcenter") }
     mavenCentral()
-    jcenter()
 }
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 }
 
 // Configure gradle-intellij-plugin plugin.
