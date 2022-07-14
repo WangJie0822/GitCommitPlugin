@@ -131,12 +131,18 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
 
             // 详细说明
             addWithFont(JLabel(getString(R.String.commit_long_description)))
-            longDescriptionArea = JTextArea(message?.longDescription.orEmpty())
+            longDescriptionArea = JTextArea(message?.longDescription.orEmpty()).apply {
+                lineWrap = true
+                wrapStyleWord = true
+            }
             addWithFont(longDescriptionArea!!, fillX().gap("5", "5", "5", "5").minWidth("200").minHeight("100").wrap())
 
             // 重大改变
             addWithFont(JLabel(getString(R.String.commit_breaking_changes)))
-            breakingChangesArea = JTextArea(message?.breakingChanges.orEmpty())
+            breakingChangesArea = JTextArea(message?.breakingChanges.orEmpty()).apply {
+                lineWrap = true
+                wrapStyleWord = true
+            }
             addWithFont(breakingChangesArea!!, fillX().gap("5", "5", "5", "5").minWidth("200").minHeight("50").wrap())
 
             // 关闭的问题
