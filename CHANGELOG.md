@@ -3,8 +3,10 @@
 # VcsHelper Changelog
 
 ## [Unreleased]
-## [1.0.5]
-## [1.0.5]
+
+## [1.0.6]
+### Changed
+- Upgrade dependencies to support higher versions of IDEA.
 
 ## [1.0.5]
 ### Fixed
