@@ -47,5 +47,6 @@ object R {
         const val commit_long_description = "commit.longDescription"
         const val commit_breaking_changes = "commit.breakingChanges"
         const val commit_closed_issues = "commit.closedIssues"
+        const val commit_reset = "commit.reset"
     }
 }

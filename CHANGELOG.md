@@ -3,6 +3,14 @@
 # VcsHelper Changelog
 
 ## [Unreleased]
+## [1.0.7]
+## [1.0.7]
+
+## [1.0.7]
+### Add
+- Add 'Reset' Button.
+### Changed
+- Upgrade dependencies to support higher versions of IDEA.
 
 ## [1.0.6]
 ### Changed

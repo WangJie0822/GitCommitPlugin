@@ -17,15 +17,12 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import net.miginfocom.layout.CC
+import java.awt.AWTEvent
+import java.awt.event.ActionEvent
+import java.beans.PropertyChangeListener
 import java.io.File
 import java.util.function.Consumer
-import javax.swing.ButtonGroup
-import javax.swing.JComponent
-import javax.swing.JLabel
-import javax.swing.JPanel
-import javax.swing.JRadioButton
-import javax.swing.JTextArea
-import javax.swing.JTextField
+import javax.swing.*
 
 /**
  * 提交规范弹窗
@@ -149,6 +146,18 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
             addWithFont(JLabel(getString(R.String.commit_closed_issues)))
             closedIssuesField = JTextField(message?.closedIssues.orEmpty())
             addWithFont(closedIssuesField!!, fillX().gap("5", "5", "5", "5").wrap())
+
+            // 重置按钮
+            addWithFont(JButton(getString(R.String.commit_reset)).apply {
+                addActionListener {
+                    typeOfChangeGroup?.elements?.toList()?.firstOrNull()?.isSelected = true
+                    scopeOfChangeBox?.selectedItem = ""
+                    shortDescriptionField?.text = null
+                    longDescriptionArea?.text = null
+                    breakingChangesArea?.text = null
+                    closedIssuesField?.text = null
+                }
+            })
         }
     }
 
