@@ -17,7 +17,7 @@ object StringsBundle : AbstractBundle(BUNDLE_PATH) {
         loader: ClassLoader,
         control: ResourceBundle.Control
     ): ResourceBundle {
-        val dynamicLocale = Locale.forLanguageTag(Locale.ENGLISH.toLanguageTag())
+        val dynamicLocale = Locale.forLanguageTag(Locale.getDefault().toLanguageTag())
         val dynamicBundle = ResourceBundle.getBundle(pathToBundle, dynamicLocale, loader, control)
         return dynamicBundle ?: super.findBundle(pathToBundle, loader, control)
     }
