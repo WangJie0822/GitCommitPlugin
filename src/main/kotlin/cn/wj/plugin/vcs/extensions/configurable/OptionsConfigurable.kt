@@ -13,7 +13,7 @@ import cn.wj.plugin.vcs.constants.DEFAULT_JSON_CONFIG_PATH
 import cn.wj.plugin.vcs.constants.DEFAULT_SCOPE_WRAPPER_END
 import cn.wj.plugin.vcs.constants.DEFAULT_SCOPE_WRAPPER_START
 import cn.wj.plugin.vcs.constants.DEFAULT_TEXT_AUTO_WRAP
-import cn.wj.plugin.vcs.constants.DEFAULT_TYPE_OF_CHANGE_LIST
+import cn.wj.plugin.vcs.constants.DEFAULT_TYPE_OF_CHANGE_LIST_JSON
 import cn.wj.plugin.vcs.constants.DEFAULT_USE_JSON_CONFIG
 import cn.wj.plugin.vcs.constants.PROJECT_PATH_PLACEHOLDER
 import cn.wj.plugin.vcs.dialog.TypeOfChangeDialog
@@ -259,7 +259,7 @@ class OptionsConfigurablePanel {
                                 tfClosedIssuesWhenEmpty.text = DEFAULT_CLOSED_ISSUES_WHEN_EMPTY
                                 (lTypeOfChange.model as CollectionListModel).let {
                                     it.removeAll()
-                                    it.addAll(0, DEFAULT_TYPE_OF_CHANGE_LIST.toTypeEntity() ?: arrayListOf())
+                                    it.addAll(0, DEFAULT_TYPE_OF_CHANGE_LIST_JSON.toTypeEntity() ?: arrayListOf())
                                 }
                             }
                         },

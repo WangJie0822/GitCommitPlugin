@@ -13,7 +13,7 @@ import cn.wj.plugin.vcs.constants.DEFAULT_JSON_CONFIG_PATH
 import cn.wj.plugin.vcs.constants.DEFAULT_SCOPE_WRAPPER_END
 import cn.wj.plugin.vcs.constants.DEFAULT_SCOPE_WRAPPER_START
 import cn.wj.plugin.vcs.constants.DEFAULT_TEXT_AUTO_WRAP
-import cn.wj.plugin.vcs.constants.DEFAULT_TYPE_OF_CHANGE_LIST
+import cn.wj.plugin.vcs.constants.DEFAULT_TYPE_OF_CHANGE_LIST_JSON
 import cn.wj.plugin.vcs.constants.DEFAULT_USE_JSON_CONFIG
 import cn.wj.plugin.vcs.entity.ChangeTypeEntity
 import cn.wj.plugin.vcs.entity.KeywordsEntity
@@ -75,7 +75,7 @@ class Options : PersistentStateComponent<Options> {
 
     /** 修改类型列表 */
     @CollectionBean
-    var typeOfChangeList = DEFAULT_TYPE_OF_CHANGE_LIST
+    var typeOfChangeList = DEFAULT_TYPE_OF_CHANGE_LIST_JSON
 
     fun getTypeOfChangeList(): ArrayList<ChangeTypeEntity> {
         return typeOfChangeList.toTypeEntity() ?: arrayListOf()
