@@ -26,9 +26,13 @@
 ```
 
 你可以使用Commit弹窗中提交信息历史按钮前面的按钮 `Create Commit Message` ![](https://raw.githubusercontent.com/WangJie0822/VcsHelperPlugin/develop/src/main/resources/icons/load.svg) 
-或者使用工具栏中的按钮 `Show Create Template Dialog` ![](https://raw.githubusercontent.com/WangJie0822/VcsHelperPlugin/develop/src/main/resources/icons/commit.svg) 来使用此功能。
+或者使用工具栏中的按钮 `Show Create Template Dialog` ![](https://raw.githubusercontent.com/WangJie0822/VcsHelperPlugin/develop/src/main/resources/icons/commit.svg) 或者默认快捷键 <kbd>Alt K</kbd>来使用此功能。
+
+![使用示例](SAMPLE_USE.png)
 
 你还可以通过 <kbd>Settings/Preferences</kbd> > <kbd>Tools</kbd> > <kbd>VcsHelper</kbd> 修改配置
+
+![设置示例](SAMPLE_SETTINGS.png)
 
 或者添加像下面格式的 `*.json` 文件来自定义配置:
 ```json
@@ -61,17 +65,17 @@
 ```
 <!-- Plugin description end -->
 
-## Installation
+## 安装
 
-- Using IDE built-in plugin system:
+- 使用 IDEA 插件系统:
   
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "VcsHelper"</kbd> >
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>搜索 "VcsHelper"</kbd> >
   <kbd>Install Plugin</kbd>
   
-- Manually:
+- 手动:
 
-  Download the [latest release](https://github.com/WangJie0822/VcsHelper/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+  下载 [最新释放版本](https://github.com/WangJie0822/VcsHelper/releases/latest) 并使用
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd> 进行安装
 
 
 ---
