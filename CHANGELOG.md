@@ -3,11 +3,9 @@
 # VcsHelper Changelog
 
 ## [Unreleased]
-## [1.1.0]
-## [1.1.0]
-## [1.1.0]
-## [1.0.8]
-## [1.0.8]
+## [1.1.1]
+### Add
+- Add rear scope settings.
 
 ## [1.0.8]
 ### Changed
