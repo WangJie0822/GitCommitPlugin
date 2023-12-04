@@ -16,6 +16,7 @@ object R {
 
         const val setting_name = "setting.name"
         const val setting_use_file_config = "setting.useFileConfig"
+        const val setting_rear_scope = "setting.rearScope"
         const val setting_wrap_lines = "setting.wrapLines"
         const val setting_add = "setting.add"
         const val setting_remove = "setting.remove"

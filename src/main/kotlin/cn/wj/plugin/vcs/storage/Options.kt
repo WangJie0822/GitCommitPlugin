@@ -10,6 +10,7 @@ import cn.wj.plugin.vcs.constants.DEFAULT_CLOSED_ISSUES_WHEN_EMPTY
 import cn.wj.plugin.vcs.constants.DEFAULT_DESCRIPTION_SEPARATOR
 import cn.wj.plugin.vcs.constants.DEFAULT_FONT_NAME
 import cn.wj.plugin.vcs.constants.DEFAULT_JSON_CONFIG_PATH
+import cn.wj.plugin.vcs.constants.DEFAULT_REAR_SCOPE
 import cn.wj.plugin.vcs.constants.DEFAULT_SCOPE_WRAPPER_END
 import cn.wj.plugin.vcs.constants.DEFAULT_SCOPE_WRAPPER_START
 import cn.wj.plugin.vcs.constants.DEFAULT_TEXT_AUTO_WRAP
@@ -72,6 +73,9 @@ class Options : PersistentStateComponent<Options> {
 
     /** 关闭的问题为空显示 */
     var closedIssuesWhenEmpty = DEFAULT_CLOSED_ISSUES_WHEN_EMPTY
+
+    /** 影响范围后置 */
+    var rearScope = DEFAULT_REAR_SCOPE
 
     /** 修改类型列表 */
     @CollectionBean

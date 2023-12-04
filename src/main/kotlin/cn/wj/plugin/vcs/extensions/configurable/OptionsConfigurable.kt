@@ -19,6 +19,7 @@ import cn.wj.plugin.vcs.constants.PROJECT_PATH_PLACEHOLDER
 import cn.wj.plugin.vcs.dialog.TypeOfChangeDialog
 import cn.wj.plugin.vcs.entity.ChangeTypeEntity
 import cn.wj.plugin.vcs.ext.addWithFont
+import cn.wj.plugin.vcs.ext.getDefaultFont
 import cn.wj.plugin.vcs.ext.previewFont
 import cn.wj.plugin.vcs.storage.Options
 import cn.wj.plugin.vcs.tools.ConfigHelper
@@ -121,7 +122,7 @@ class OptionsConfigurablePanel {
     /** 输入字体选择 */
     private val fcbFont = FontComboBox(false, false, false).apply {
         fontName = options.inputTextFontName.ifBlank {
-            JBFont.create(UIUtil.getLabelFont(UIUtil.FontSize.NORMAL)).fontName
+            getDefaultFont().fontName
         }
         addItemListener {
             if (it.stateChange == ItemEvent.SELECTED) {
@@ -157,6 +158,11 @@ class OptionsConfigurablePanel {
 
     /** 关闭的问题为空显示 */
     private val tfClosedIssuesWhenEmpty = JTextField(options.closedIssuesWhenEmpty)
+
+    /** 影响范围后置 */
+    private val cbRearScope = JCheckBox(getString(R.String.setting_rear_scope)).apply {
+        isSelected = options.rearScope
+    }
 
     /** 修改类型列表 */
     private val lTypeOfChange = JBList(CollectionListModel(options.getTypeOfChangeList())).apply {
@@ -232,15 +238,14 @@ class OptionsConfigurablePanel {
                         },
                         CC().split(2).gapAfter("10")
                     )
-                    // 导出配置
-                    addWithFont(
-                        JButton(getString(R.String.setting_export_config)).apply {
-                            addActionListener {
-                                // TODO
-                            }
-                        },
-                        CC().split(2).gapAfter("10")
-                    )
+                    // TODO 导出配置
+//                    addWithFont(
+//                        JButton(getString(R.String.setting_export_config)).apply {
+//                            addActionListener {
+//                            }
+//                        },
+//                        CC().split(2).gapAfter("10")
+//                    )
                     // 重置
                     addWithFont(
                         JButton(getString(R.String.setting_reset)).apply {
@@ -297,6 +302,8 @@ class OptionsConfigurablePanel {
                     // 单行最大长度
                     addWithFont(JLabel(getString(R.String.setting_maximum_length_of_single_lines)), CC().gapAfter("5"))
                     addWithFont(tfAutoWrapLength, wrap())
+                    // 影响范围后置
+                    addWithFont(cbRearScope, wrap())
                     // 字体选择器
                     addWithFont(JLabel(getString(R.String.setting_input_text_font_with_colon)), CC().split())
                     addWithFont(fcbFont, wrap().gapBefore("5"))

@@ -13,7 +13,7 @@ const val DEFAULT_CONFIG_FILE_NAME = "commit_template.json"
 const val PROJECT_PATH_PLACEHOLDER = "\${projectDir}"
 
 /** 是否使用 json 文件配置 */
-const val DEFAULT_USE_JSON_CONFIG = true
+const val DEFAULT_USE_JSON_CONFIG = false
 
 /** 配置文件路径 */
 const val DEFAULT_JSON_CONFIG_PATH = "$PROJECT_PATH_PLACEHOLDER/$DEFAULT_CONFIG_FILE_NAME"
@@ -51,6 +51,9 @@ const val DEFAULT_CLOSED_ISSUES_SEPARATOR = ","
 
 /** 关闭的问题为空显示 */
 const val DEFAULT_CLOSED_ISSUES_WHEN_EMPTY = ""
+
+/** 后置影响范围 */
+const val DEFAULT_REAR_SCOPE = true
 
 /** 修改类型列表 */
 val DEFAULT_TYPE_OF_CHANGE_LIST: ArrayList<ChangeTypeEntity>

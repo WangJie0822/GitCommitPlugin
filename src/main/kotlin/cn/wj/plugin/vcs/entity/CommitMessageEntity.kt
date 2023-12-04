@@ -1,5 +1,6 @@
 package cn.wj.plugin.vcs.entity
 
+import cn.wj.plugin.vcs.storage.Options
 import cn.wj.plugin.vcs.tools.ConfigHelper
 import com.intellij.openapi.project.Project
 import kotlinx.serialization.Serializable
@@ -18,12 +19,12 @@ import org.apache.commons.lang.WordUtils
  */
 @Serializable
 data class CommitMessageEntity(
-    var typeOfChange: ChangeTypeEntity = ChangeTypeEntity("", "", ""),
-    var scopeOfChange: String = "",
-    var shortDescription: String = "",
-    var longDescription: String = "",
-    var breakingChanges: String = "",
-    var closedIssues: String = ""
+        var typeOfChange: ChangeTypeEntity = ChangeTypeEntity("", "", ""),
+        var scopeOfChange: String = "",
+        var shortDescription: String = "",
+        var longDescription: String = "",
+        var breakingChanges: String = "",
+        var closedIssues: String = ""
 ) {
 
     fun getCommitString(project: Project?): String {
@@ -32,24 +33,34 @@ data class CommitMessageEntity(
             // 修改类型
             append(typeOfChange.action)
 
-            // 修改范围
-            if (scopeOfChange.isNotBlank()) {
-                append("${keywords.scopeWrapperStart}$scopeOfChange${keywords.scopeWrapperEnd}")
+            if (Options.instance.rearScope) {
+                // 影响范围后置
+                append(keywords.descriptionSeparator)
+                // 影响范围
+                if (scopeOfChange.isNotBlank()) {
+                    append("${keywords.scopeWrapperStart}$scopeOfChange${keywords.scopeWrapperEnd}")
+                }
+            } else {
+                // 影响范围
+                if (scopeOfChange.isNotBlank()) {
+                    append("${keywords.scopeWrapperStart}$scopeOfChange${keywords.scopeWrapperEnd}")
+                }
+                append(keywords.descriptionSeparator)
             }
 
             // 简单说明
-            append("${keywords.descriptionSeparator}$shortDescription")
+            append(shortDescription)
 
             // 详细描述
             if (longDescription.isNotBlank()) {
                 appendLine()
                 appendLine()
                 append(
-                    if (keywords.wrapWords) {
-                        WordUtils.wrap(longDescription, keywords.maxLineLength)
-                    } else {
-                        longDescription
-                    }
+                        if (keywords.wrapWords) {
+                            WordUtils.wrap(longDescription, keywords.maxLineLength)
+                        } else {
+                            longDescription
+                        }
                 )
             }
 
@@ -58,11 +69,11 @@ data class CommitMessageEntity(
                 appendLine()
                 appendLine()
                 append(
-                    if (keywords.wrapWords) {
-                        WordUtils.wrap("${keywords.breakingChanges}$breakingChanges", keywords.maxLineLength)
-                    } else {
-                        "${keywords.breakingChanges}$breakingChanges"
-                    }
+                        if (keywords.wrapWords) {
+                            WordUtils.wrap("${keywords.breakingChanges}$breakingChanges", keywords.maxLineLength)
+                        } else {
+                            "${keywords.breakingChanges}$breakingChanges"
+                        }
                 )
             } else {
                 if (keywords.breakingChangesEmpty.isNotBlank()) {
@@ -117,25 +128,34 @@ data class CommitMessageEntity(
 
             // 修改类型
             val changeTypeStr = if (line1.contains(keywords.scopeWrapperStart)) {
-                // 包含范围
+                // 包含影响范围
+                // 影响范围
                 result.scopeOfChange = line1.substring(
-                    line1.indexOf(keywords.scopeWrapperStart) + 1,
-                    line1.indexOf(keywords.scopeWrapperEnd)
-                )
-                    .trim { it <= ' ' }
-                line1.substring(0, line1.indexOf(keywords.scopeWrapperStart))
+                        line1.indexOf(keywords.scopeWrapperStart) + 1,
+                        line1.indexOf(keywords.scopeWrapperEnd)
+                ).trim { it <= ' ' }
+                if (Options.instance.rearScope) {
+                    // 影响范围后置
+                    // 简单说明
+                    result.shortDescription = line1.substring(line1.indexOf(keywords.scopeWrapperEnd) + 1, line1.length)
+                            .trim { it <= ' ' }
+                    line1.substring(0, line1.indexOf(keywords.descriptionSeparator))
+                } else {
+                    // 简单说明
+                    result.shortDescription = line1.substring(line1.indexOf(keywords.descriptionSeparator) + 1, line1.length)
+                            .trim { it <= ' ' }
+                    line1.substring(0, line1.indexOf(keywords.scopeWrapperStart))
+                }
             } else {
-                // 没有范围
+                // 简单说明
+                result.shortDescription = line1.substring(line1.indexOf(keywords.descriptionSeparator) + 1, line1.length)
+                        .trim { it <= ' ' }
                 line1.substring(0, line1.indexOf(keywords.descriptionSeparator))
             }
-            // 修改类型
             result.typeOfChange = typeList.firstOrNull {
                 it.action == changeTypeStr
             } ?: typeList.first()
 
-            // 简单说明
-            result.shortDescription = line1.substring(line1.indexOf(keywords.descriptionSeparator) + 1, line1.length)
-                .trim { it <= ' ' }
             if (strings.size < 2) {
                 return result
             }
@@ -146,7 +166,7 @@ data class CommitMessageEntity(
             while (pos < strings.size) {
                 val lineString = strings[pos]
                 if (lineString.startsWith(keywords.breakingChanges) ||
-                    lineString.startsWith(keywords.closedIssues)
+                        lineString.startsWith(keywords.closedIssues)
                 ) {
                     break
                 }
@@ -176,7 +196,7 @@ data class CommitMessageEntity(
                 val lineString = strings[pos]
                 if (lineString.startsWith(keywords.closedIssues)) {
                     sb.append(lineString.replace(keywords.closedIssues, ""))
-                        .append(keywords.closedIssuesSeparator)
+                            .append(keywords.closedIssuesSeparator)
                 }
                 pos++
             }

@@ -36,14 +36,17 @@ fun AnActionEvent.getMessage(localChangeList: LocalChangeList? = null): CommitMe
             val msg = cmi.commitMessage
             CommitMessageEntity.parse(msg, project)
         }
+
         null != localChangeList -> {
             CommitMessageEntity.parse(getCommitMessageFor(localChangeList).orEmpty(), project)
         }
+
         null != project -> {
             PropertiesComponent.getInstance(project!!)
                 .getValue(STORAGE_KEY_COMMIT_MESSAGE)
                 .toTypeEntity()
         }
+
         else -> {
             null
         }

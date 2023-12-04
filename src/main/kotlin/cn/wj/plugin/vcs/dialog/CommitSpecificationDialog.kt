@@ -17,12 +17,16 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import net.miginfocom.layout.CC
-import java.awt.AWTEvent
-import java.awt.event.ActionEvent
-import java.beans.PropertyChangeListener
 import java.io.File
 import java.util.function.Consumer
-import javax.swing.*
+import javax.swing.ButtonGroup
+import javax.swing.JButton
+import javax.swing.JComponent
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JRadioButton
+import javax.swing.JTextArea
+import javax.swing.JTextField
 
 /**
  * 提交规范弹窗
@@ -30,7 +34,7 @@ import javax.swing.*
  * > [王杰](mailto:w15555650921@gmail.com) 创建于 20201/3/19
  */
 class CommitSpecificationDialog(private val project: Project?, message: CommitMessageEntity?) :
-    DialogWrapper(project) {
+        DialogWrapper(project) {
 
     private val panel = CommitSpecificationPanel(project, message)
 
@@ -48,7 +52,7 @@ class CommitSpecificationDialog(private val project: Project?, message: CommitMe
         super.doOKAction()
         if (null != project) {
             PropertiesComponent.getInstance(project)
-                .setValue(STORAGE_KEY_COMMIT_MESSAGE, getMessageEntity().toJsonString())
+                    .setValue(STORAGE_KEY_COMMIT_MESSAGE, getMessageEntity().toJsonString())
         }
     }
 
@@ -81,25 +85,25 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
             // 修改类型
             addWithFont(JLabel(getString(R.String.commit_type_of_change)))
             addWithFont(
-                JPanel(migLayoutVertical()).apply {
-                    typeOfChangeGroup = ButtonGroup()
-                    var selected = false
-                    config.changeTypes.forEach { changeType ->
-                        val rb = JRadioButton(changeType.display()).apply {
-                            actionCommand = changeType.action
-                            if (message?.typeOfChange?.action == changeType.action) {
-                                isSelected = true
-                                selected = true
+                    JPanel(migLayoutVertical()).apply {
+                        typeOfChangeGroup = ButtonGroup()
+                        var selected = false
+                        config.changeTypes.forEach { changeType ->
+                            val rb = JRadioButton(changeType.display()).apply {
+                                actionCommand = changeType.action
+                                if (message?.typeOfChange?.action == changeType.action) {
+                                    isSelected = true
+                                    selected = true
+                                }
                             }
+                            typeOfChangeGroup!!.add(rb)
+                            addWithFont(rb, fillX())
                         }
-                        typeOfChangeGroup!!.add(rb)
-                        addWithFont(rb, fillX())
-                    }
-                    if (!selected) {
-                        typeOfChangeGroup!!.elements.toList().firstOrNull()?.isSelected = true
-                    }
-                },
-                fillX().gap("5", "5", "5", "5").wrap()
+                        if (!selected) {
+                            typeOfChangeGroup!!.elements.toList().firstOrNull()?.isSelected = true
+                        }
+                    },
+                    fillX().gap("5", "5", "5", "5").wrap()
             )
 
             // 影响范围
@@ -112,9 +116,9 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
                 if (result.isSuccess()) {
                     addItem("")
                     result.getScopes().forEach(
-                        Consumer { item: String? ->
-                            addItem(item)
-                        }
+                            Consumer { item: String? ->
+                                addItem(item)
+                            }
                     )
                 }
                 selectedItem = message?.scopeOfChange.orEmpty()
@@ -163,12 +167,12 @@ class CommitSpecificationPanel(private val project: Project?, private val messag
 
     fun getMessageEntity(): CommitMessageEntity {
         return CommitMessageEntity(
-            typeOfChange = getSelectedChangeType(),
-            scopeOfChange = scopeOfChangeBox?.selectedItem.toString(),
-            shortDescription = shortDescriptionField?.text.orEmpty().trim { it <= ' ' },
-            longDescription = longDescriptionArea?.text.orEmpty().trim { it <= ' ' },
-            breakingChanges = breakingChangesArea?.text.orEmpty().trim { it <= ' ' },
-            closedIssues = closedIssuesField?.text.orEmpty().trim { it <= ' ' }
+                typeOfChange = getSelectedChangeType(),
+                scopeOfChange = scopeOfChangeBox?.selectedItem.toString(),
+                shortDescription = shortDescriptionField?.text.orEmpty().trim { it <= ' ' },
+                longDescription = longDescriptionArea?.text.orEmpty().trim { it <= ' ' },
+                breakingChanges = breakingChangesArea?.text.orEmpty().trim { it <= ' ' },
+                closedIssues = closedIssuesField?.text.orEmpty().trim { it <= ' ' }
         )
     }
 
