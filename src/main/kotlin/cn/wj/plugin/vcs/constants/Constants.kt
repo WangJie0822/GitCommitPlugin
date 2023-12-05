@@ -53,42 +53,42 @@ const val DEFAULT_CLOSED_ISSUES_SEPARATOR = ","
 const val DEFAULT_CLOSED_ISSUES_WHEN_EMPTY = ""
 
 /** 后置影响范围 */
-const val DEFAULT_REAR_SCOPE = true
+const val DEFAULT_REAR_SCOPE = false
 
 /** 修改类型列表 */
 val DEFAULT_TYPE_OF_CHANGE_LIST: ArrayList<ChangeTypeEntity>
     get() = arrayListOf(
-            ChangeTypeEntity("Features", "feat", "A new feature"),
-            ChangeTypeEntity("Bug Fixes", "fix", "A bug fix"),
-            ChangeTypeEntity("Documentation", "docs", "Documentation only changes"),
-            ChangeTypeEntity(
-                    "Styles", "style",
-                    "Changes that do not affect the meaning of the" +
-                            " code (white-space, formatting, missing semi-colons, etc)"
-            ),
-            ChangeTypeEntity(
-                    "Code Refactoring", "refactor",
-                    "A code change that neither " +
-                            "fixes a bug nor adds a feature"
-            ),
-            ChangeTypeEntity(
-                    "Performance Improvements", "perf",
-                    "A code change that " +
-                            "improves performance"
-            ),
-            ChangeTypeEntity("Tests", "test", "Adding missing tests or correcting existing tests"),
-            ChangeTypeEntity(
-                    "Builds", "build",
-                    "Changes that affect the build system or " +
-                            "external dependencies (example scopes: gulp, broccoli, npm)"
-            ),
-            ChangeTypeEntity(
-                    "Continuous Integrations", "ci",
-                    "Changes to our CI configuration" +
-                            " files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"
-            ),
-            ChangeTypeEntity("Chores", "chore", "Other changes that don't modify src or test files"),
-            ChangeTypeEntity("Reverts", "revert", "Reverts a previous commit")
+        ChangeTypeEntity("Features", "feat", "A new feature"),
+        ChangeTypeEntity("Bug Fixes", "fix", "A bug fix"),
+        ChangeTypeEntity("Documentation", "docs", "Documentation only changes"),
+        ChangeTypeEntity(
+            "Styles", "style",
+            "Changes that do not affect the meaning of the" +
+                    " code (white-space, formatting, missing semi-colons, etc)"
+        ),
+        ChangeTypeEntity(
+            "Code Refactoring", "refactor",
+            "A code change that neither " +
+                    "fixes a bug nor adds a feature"
+        ),
+        ChangeTypeEntity(
+            "Performance Improvements", "perf",
+            "A code change that " +
+                    "improves performance"
+        ),
+        ChangeTypeEntity("Tests", "test", "Adding missing tests or correcting existing tests"),
+        ChangeTypeEntity(
+            "Builds", "build",
+            "Changes that affect the build system or " +
+                    "external dependencies (example scopes: gulp, broccoli, npm)"
+        ),
+        ChangeTypeEntity(
+            "Continuous Integrations", "ci",
+            "Changes to our CI configuration" +
+                    " files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"
+        ),
+        ChangeTypeEntity("Chores", "chore", "Other changes that don't modify src or test files"),
+        ChangeTypeEntity("Reverts", "revert", "Reverts a previous commit")
     )
 val DEFAULT_TYPE_OF_CHANGE_LIST_JSON: String
     get() = DEFAULT_TYPE_OF_CHANGE_LIST.toJsonString()

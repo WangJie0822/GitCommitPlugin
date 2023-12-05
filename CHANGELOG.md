@@ -6,6 +6,8 @@
 ## [1.1.1]
 ### Add
 - Add rear scope settings.
+### Fixed
+- Fixed the problem of garbled Chinese in some regions.
 
 ## [1.0.8]
 ### Changed

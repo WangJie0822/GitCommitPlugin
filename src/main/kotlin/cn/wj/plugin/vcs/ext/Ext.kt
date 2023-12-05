@@ -18,6 +18,7 @@ import com.intellij.util.ui.UIUtil
 import java.awt.Component
 import java.awt.Container
 import java.awt.Font
+import java.util.*
 import javax.swing.JComponent
 
 fun AnActionEvent.getCommitMessageI(): CommitMessageI? {
@@ -69,7 +70,15 @@ fun AnActionEvent.getCommitMessageFor(changeList: LocalChangeList): String? {
 }
 
 fun getDefaultFont(): Font {
-    return JBFont.create(UIUtil.getLabelFont(UIUtil.FontSize.NORMAL))
+    val locale = Locale.forLanguageTag(Locale.getDefault().toLanguageTag())
+    return if (locale.language == Locale.CHINESE.language) {
+        // 华语区
+        val label = UIUtil.getLabelFont(UIUtil.FontSize.NORMAL)
+        val font = Font("Microsoft YaHei UI", label.style, label.size)
+        JBFont.create(font)
+    } else {
+        JBFont.create(UIUtil.getLabelFont(UIUtil.FontSize.NORMAL))
+    }
 }
 
 fun JComponent.previewFont(primary: String?) {

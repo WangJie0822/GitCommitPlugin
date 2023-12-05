@@ -45,8 +45,6 @@ import com.intellij.ui.FontComboBox
 import com.intellij.ui.IdeBorderFactory
 import com.intellij.ui.ToolbarDecorator
 import com.intellij.ui.components.JBList
-import com.intellij.util.ui.JBFont
-import com.intellij.util.ui.UIUtil
 import net.miginfocom.layout.CC
 import java.awt.event.ItemEvent
 import javax.swing.JButton
@@ -238,14 +236,6 @@ class OptionsConfigurablePanel {
                         },
                         CC().split(2).gapAfter("10")
                     )
-                    // TODO 导出配置
-//                    addWithFont(
-//                        JButton(getString(R.String.setting_export_config)).apply {
-//                            addActionListener {
-//                            }
-//                        },
-//                        CC().split(2).gapAfter("10")
-//                    )
                     // 重置
                     addWithFont(
                         JButton(getString(R.String.setting_reset)).apply {
@@ -264,7 +254,10 @@ class OptionsConfigurablePanel {
                                 tfClosedIssuesWhenEmpty.text = DEFAULT_CLOSED_ISSUES_WHEN_EMPTY
                                 (lTypeOfChange.model as CollectionListModel).let {
                                     it.removeAll()
-                                    it.addAll(0, DEFAULT_TYPE_OF_CHANGE_LIST_JSON.toTypeEntity() ?: arrayListOf())
+                                    it.addAll(
+                                        0, DEFAULT_TYPE_OF_CHANGE_LIST_JSON.toTypeEntity()
+                                            ?: arrayListOf()
+                                    )
                                 }
                             }
                         },
@@ -364,19 +357,19 @@ class OptionsConfigurablePanel {
                 list.add(lTypeOfChange.model.getElementAt(i))
             }
             useJsonConfig != cbUseJsonConfig.isSelected ||
-                jsonConfigPath != tfConfigPath.text ||
-                textAutoWrap != cbTextAutoWrap.isSelected ||
-                autoWrapLength != tfAutoWrapLength.text ||
-                inputTextFontName != fcbFont.fontName ||
-                scopeWrapperStart != tfScopeWrapperStart.text ||
-                scopeWrapperEnd != tfScopeWrapperEnd.text ||
-                descriptionSeparator != tfDescriptionSeparator.text ||
-                breakingChanges != tfBreakingChanges.text ||
-                breakingChangesWhenEmpty != tfBreakingChangesWhenEmpty.text ||
-                closedIssues != tfClosedIssues.text ||
-                closedIssuesSeparator != tfClosedIssuesSeparator.text ||
-                closedIssuesWhenEmpty != tfClosedIssuesWhenEmpty.text ||
-                typeOfChangeList != list.toJsonString()
+                    jsonConfigPath != tfConfigPath.text ||
+                    textAutoWrap != cbTextAutoWrap.isSelected ||
+                    autoWrapLength != tfAutoWrapLength.text ||
+                    inputTextFontName != fcbFont.fontName ||
+                    scopeWrapperStart != tfScopeWrapperStart.text ||
+                    scopeWrapperEnd != tfScopeWrapperEnd.text ||
+                    descriptionSeparator != tfDescriptionSeparator.text ||
+                    breakingChanges != tfBreakingChanges.text ||
+                    breakingChangesWhenEmpty != tfBreakingChangesWhenEmpty.text ||
+                    closedIssues != tfClosedIssues.text ||
+                    closedIssuesSeparator != tfClosedIssuesSeparator.text ||
+                    closedIssuesWhenEmpty != tfClosedIssuesWhenEmpty.text ||
+                    typeOfChangeList != list.toJsonString()
         }
     }
 
