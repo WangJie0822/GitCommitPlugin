@@ -3,6 +3,10 @@
 # VcsHelper Changelog
 
 ## [Unreleased]
+## [1.1.2]
+### Fixed
+- Fixed the issue that the pop-up window on the low-resolution screen was not fully displayed.
+
 ## [1.1.1]
 ### Add
 - Add rear scope settings.
